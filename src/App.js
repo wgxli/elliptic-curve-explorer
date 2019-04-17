@@ -2,8 +2,9 @@ import React, {PureComponent} from 'react';
 
 import bigInt from 'big-integer';
 
-import MainView from './components/MainView/MainView.js';
 import ControlBar from './components/ControlBar/ControlBar.js';
+import InfoPanel from './components/InfoPanel/InfoPanel.js';
+import MainView from './components/MainView/MainView.js';
 
 import reduce_full, {reduce_2} from './math/reduce.js';
 
@@ -33,7 +34,6 @@ class App extends PureComponent {
 		curve[i] = v;
 		this.setState({curve: curve});
 		this.forceUpdate();
-		console.log(reduce_full(this.state.curve));
 	}
 
 	render() {
@@ -43,7 +43,10 @@ class App extends PureComponent {
 					curve={this.state.curve}
 					setCoefficient={this.setCoefficient.bind(this)}
 				/>
-				<MainView/>
+				<div className='content'>
+					<InfoPanel/>
+					<MainView/>
+				</div>
 			</div>
 		);
 	}

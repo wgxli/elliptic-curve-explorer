@@ -1,3 +1,5 @@
+import bigInt from 'big-integer';
+
 /*
  * Reduces the given general elliptic curve
  * to the Weierstrass form
@@ -34,9 +36,9 @@ function reduce_1(curve) {
 function reduce_2(curve) {
 	const [a, b, c, d, e] = curve;
 	const coefficients = [
-		4*b + a*a,
-		8*(2*d + a*c),
-		16*(4*e + c*c)
+		b.times(4).plus(a.times(a)),
+		d.times(2).plus(a.times(c)).times(8),
+		e.times(4).plus(c.times(c)).times(16)
 	];
 
 	const map = function(X, Y) {
@@ -63,8 +65,10 @@ function reduce_2(curve) {
 function reduce_3(curve) {
 	const [a, b, c] = curve;
 	const coefficients = [
-		27 * (3*b - a*a),
-		27 * (a*(8*a*a - 27*b) + 27*c)
+		b.times(3).minus(a.times(a)).times(27),
+		a.times(
+			a.times(a.times(8)).minus(b.times(27))
+		).plus(c.times(27)).times(27)
 	]
 
 	const map = function(X, Y) {
@@ -93,10 +97,28 @@ function reduce_3(curve) {
 function minimize(curve) {
 	const [a, b] = curve;
 
+	var gcd = bigInt.gcd(a.pow(3), b.pow(2));
+	var scale = bigInt.one;
+
+	var p = bigInt(2);
+	while (p.pow(12).leq(gcd)) {
+		if (gcd.isDivisibleBy(p.pow(12))) {
+			gcd = gcd.divide(p.pow(12));
+			scale = scale.times(p);
+		} else {
+			p = p.plus(1);
+		}
+	}
+
+	const coefficients = [
+		a.divide(scale.pow(4)),
+		b.divide(scale.pow(6))
+	];
+
 	const map = function() {
 		return 1;
 	}
-	return [curve, map];
+	return [coefficients, map];
 }
 
 /*
@@ -118,6 +140,7 @@ function reduce_full(curve) {
 
 export {
 	reduce_2,
-	reduce_3
+	reduce_3,
+	minimize
 };
 export default reduce_full;
