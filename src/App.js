@@ -1,28 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {PureComponent} from 'react';
+
+import MainView from './components/MainView/MainView.js';
+import ControlBar from './components/ControlBar/ControlBar.js';
+
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+/*
+ * curve: An array of ten floats representing the currently shown elliptic curve.
+ *        Each float a_i is a coefficient in the equation
+ *        a_0
+ *        + a_1 x + a_2 y
+ *        + a_3 x^2 + a_4 xy + a_5 y^2
+ *        + a_6 x^3 + a_7 x^2 y + a_8 x y^2 + a_9 y^3 = 0.
+ */
+
+class App extends PureComponent {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			curve: [0, 1, 0, 0, 0, 1, -1, 0, 0, 0, 0] // y^2 = x^3 - x
+		}
+	}
+
+	render() {
+		return (
+			<div className='app'>
+				<ControlBar/>
+				<MainView/>
+			</div>
+		);
+	}
 }
 
 export default App;
