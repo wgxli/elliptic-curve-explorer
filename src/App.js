@@ -4,9 +4,8 @@ import bigInt from 'big-integer';
 
 import ControlBar from './components/ControlBar/ControlBar.js';
 import InfoPanel from './components/InfoPanel/InfoPanel.js';
+import HelpPanel from './components/HelpPanel/HelpPanel.js';
 import MainView from './components/MainView/MainView.js';
-
-import reduce_full, {reduce_2} from './math/reduce.js';
 
 import './App.css';
 
@@ -25,15 +24,21 @@ class App extends PureComponent {
 		const initialCurve = [0, 0, 0, -1, 0];
 
 		this.state = {
-			curve: initialCurve.map((x) => bigInt(x))
+			curve: initialCurve.map((x) => bigInt(x)),
+			infoPanelOpen: true,
+			view3D: false,
+			helpPanelOpen: false
 		}
+	}
+
+	toggleInfoPanel() {
+		this.setState({infoPanelOpen: !this.state.infoPanelOpen});
 	}
 
 	setCoefficient(i, v) {
 		const curve = this.state.curve;
 		curve[i] = v;
-		this.setState({curve: curve});
-		this.forceUpdate();
+		this.setState({curve: [...curve]});
 	}
 
 	render() {
@@ -42,10 +47,17 @@ class App extends PureComponent {
 				<ControlBar
 					curve={this.state.curve}
 					setCoefficient={this.setCoefficient.bind(this)}
+					handleMenuButton={this.toggleInfoPanel.bind(this)}
 				/>
 				<div className='content'>
-					<InfoPanel/>
+					<InfoPanel
+						open={this.state.infoPanelOpen}
+						curve={this.state.curve}
+					/>
 					<MainView/>
+					<HelpPanel
+						open={this.state.helpPanelOpen}
+					/>
 				</div>
 			</div>
 		);

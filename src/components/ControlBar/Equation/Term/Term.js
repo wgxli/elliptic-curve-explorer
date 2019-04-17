@@ -3,7 +3,10 @@ import {InlineMath} from 'react-katex';
 
 import bigInt from 'big-integer';
 
+import {renderCoefficient} from 'math/display.js';
+
 import './Term.css';
+
 
 class Term extends PureComponent {
 	handleWheel(e) {
@@ -27,20 +30,12 @@ class Term extends PureComponent {
 	}
 
 	render() {
-		var coefficient = this.props.coefficient;
+		const [sign, coefficient] = renderCoefficient(
+			this.props.coefficient,
+			this.props.monomial !== '',
+			this.props.first
+		);
 
-		var sign = coefficient.lt(0) ? '-' : '+';
-		if (this.props.first && sign === '+') {
-			sign = '';
-		}
-
-		if (coefficient.lt(0)) {
-			coefficient = bigInt.zero.minus(coefficient);
-		}
-
-		if (coefficient.eq(1) && this.props.monomial !== '') {
-			coefficient = '';
-		}
 
 		var classes = 'equation-term';
 		if (this.props.coefficient.eq(0)) {

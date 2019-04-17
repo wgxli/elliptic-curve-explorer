@@ -1,4 +1,6 @@
 .control-bar {
 	white-space: nowrap;
 	overflow: hidden;
+
+	z-index: 1000;
 }
