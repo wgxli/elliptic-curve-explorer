@@ -1,36 +1,46 @@
 import React, {PureComponent} from 'react';
+import {InlineMath} from 'react-katex';
 
 import Term from './Term/Term.js';
 import './Equation.css';
 
 
-const monomials = [
-	'',
-	'x', 'y',
-	'x^2', 'xy', 'y^2',
-	'x^3', 'x^2y', 'xy^2', 'y^3'
-]
+const monomials = ['xy', 'y', 'x^2', 'x', ''];
 
 class Equation extends PureComponent {
+	getCoefficientSetter(i) {
+		return (function(v) {
+			this.props.setCoefficient(i, v);
+		}).bind(this);
+	}
+
+	renderTerm(i) {
+		return (
+			<Term
+				key={i}
+				coefficient={this.props.coefficients[i]}
+				monomial={monomials[i]}
+				setCoefficient={this.getCoefficientSetter(i)}
+			/>);
+	}
+
 	renderTerms() {
-		const terms = [];
-		for (var i=0; i<10; i++) {
-			terms.push(
-				<Term
-					key={i}
-					coefficient={this.props.coefficients[i]}
-					monomial={monomials[i]}
-					first={i === 0}
-				/>);
-		}
+		const terms = [
+			<InlineMath key={-1}>y^2</InlineMath>,
+			this.renderTerm(0),
+			this.renderTerm(1),
+			<InlineMath key={-2}>= x^3</InlineMath>,
+			this.renderTerm(2),
+			this.renderTerm(3),
+			this.renderTerm(4),
+		];
 		return terms;
 	}
 
 	render() {
 		return (
 			<div className='main-equation'>
-				{this.renderTerms()}
-				=0
+					{this.renderTerms()}
 			</div>
 		);
 	}

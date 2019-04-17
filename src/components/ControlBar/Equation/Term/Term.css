@@ -1,3 +1,6 @@
+.equation-term {
+	margin-left: 6px;
+}
 .equation-term.faded {
-	color: #777;
+	color: #CCC;
 }

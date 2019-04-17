@@ -1,3 +1,12 @@
 .main-equation {
-	color: black;
+	font-size: 32px;
+	display: inline-block;
+
+	white-space: nowrap;
+
+	margin: 8px auto 8px auto;
+}
+
+.katex-html {
+	display: none;
 }

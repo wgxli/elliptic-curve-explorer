@@ -8,7 +8,9 @@ import './ControlBar.css';
 
 const styles = {
 	controlBar: {
-		backgroundColor: 'white'
+		backgroundColor: 'white',
+		color: 'black',
+		flexDirection: 'row'
 	}
 }
 
@@ -17,7 +19,12 @@ class ControlBar extends PureComponent {
 		const classes = this.props.classes;
 		return (
 			<AppBar className={classes.controlBar}>
-				<Equation coefficients={this.props.curve}/>
+				<span>left menu</span>
+				<Equation
+					coefficients={this.props.curve}
+					setCoefficient={this.props.setCoefficient}
+				/>
+				<span>2D-3D Slider</span>
 			</AppBar>
 		);
 	}
