@@ -5,7 +5,9 @@
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "braces": "^3.0.2",
+    "tar": "^4.4.8"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -23,6 +25,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@material-ui/core": "^3.9.3",
     "three": "^0.103.0"
   }
 }

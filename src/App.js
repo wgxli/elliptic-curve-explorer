@@ -6,8 +6,8 @@ import ControlBar from './components/ControlBar/ControlBar.js';
 import './App.css';
 
 /*
- * curve: An array of ten floats representing the currently shown elliptic curve.
- *        Each float a_i is a coefficient in the equation
+ * curve: An array of ten ints representing the currently shown elliptic curve.
+ *        Each integer a_i is a coefficient in the equation
  *        a_0
  *        + a_1 x + a_2 y
  *        + a_3 x^2 + a_4 xy + a_5 y^2
@@ -26,7 +26,7 @@ class App extends PureComponent {
 	render() {
 		return (
 			<div className='app'>
-				<ControlBar/>
+				<ControlBar curve={this.state.curve}/>
 				<MainView/>
 			</div>
 		);
