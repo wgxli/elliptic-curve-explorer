@@ -1,5 +1,7 @@
 import bigInt from 'big-integer';
 
+import AffineMap, {IdentityMap} from './affineMap.js';
+
 /*
  * Reduces the given general elliptic curve
  * to the Weierstrass form
@@ -10,7 +12,7 @@ import bigInt from 'big-integer';
  * interpreted as described in App.js.
  *
  * Returns the coefficients [a_i] of the transformed
- * equation and the map (X, Y) -> (x, y).
+ * equation and the map (x, y) -> (X, Y).
  */
 function reduce_1(curve) {
 	// NOT IMPLEMENTED
@@ -31,7 +33,7 @@ function reduce_1(curve) {
  * representing the coefficients [a, b, c, d, e].
  *
  * Returns the coefficients [A, B, C] of the transformed
- * equation and the map (X, Y) -> (x, y).
+ * equation and the map (x, y) -> (X, Y).
  */
 function reduce_2(curve) {
 	const [a, b, c, d, e] = curve;
@@ -41,12 +43,10 @@ function reduce_2(curve) {
 		e.times(4).plus(c.times(c)).times(16)
 	];
 
-	const map = function(X, Y) {
-		return [
-			X/4,
-			(Y - a*X - 4*c)/8
-		];
-	};
+	const map = new AffineMap([
+		4, 0, 0,
+		a.times(4), 8, c.times(4)
+	]);
 	return [coefficients, map];
 }
 
@@ -60,23 +60,21 @@ function reduce_2(curve) {
  * Y^2 = X^3 + AX + B.
  *
  * Returns the coefficients [A, B]
- * and the map (X, Y) -> (x, y).
+ * and the map (x, y) -> (X, Y).
  */
 function reduce_3(curve) {
 	const [a, b, c] = curve;
 	const coefficients = [
 		b.times(3).minus(a.times(a)).times(27),
 		a.times(
-			a.times(a.times(8)).minus(b.times(27))
+			a.times(a.times(2)).minus(b.times(9))
 		).plus(c.times(27)).times(27)
 	]
 
-	const map = function(X, Y) {
-		return [
-			(X - 3*a)/9,
-			Y/27
-		];
-	};
+	const map = new AffineMap([
+		9, 0, a.times(3),
+		0, 27, 0
+	]);
 	return [coefficients, map];
 }
 
@@ -115,30 +113,35 @@ function minimize(curve) {
 		b.divide(scale.pow(6))
 	];
 
-	const map = function() {
-		return 1;
-	}
+	const map = new AffineMap([
+		scale.pow(4), 0, 0,
+		0, scale.pow(3), 0
+	], scale.pow(6));
 	return [coefficients, map];
 }
 
+
 /*
- * Composes the following functions:
- *     reduce_2
- *     reduce_3
- *     minimize
+ * Composes the given list of functions.
  */
-function reduce_full(curve) {
-	const functions = [reduce_2, reduce_3, minimize];
-	var transformed = curve;
+function compose(functions) {
+	return (function(curve) {
+		var overall_map = IdentityMap;
+		var map;
 
-	for (var f of functions) {
-		transformed = f(transformed)[0];
-	}
+		for (var f of functions) {
+			[curve, map] = f(curve);
+			overall_map = map.compose(overall_map);
+		}
 
-	return transformed;
+		return [curve, overall_map];
+	});
 }
 
+const reduce_full = compose([reduce_2, reduce_3, minimize]);
+
 export {
+	reduce_1,
 	reduce_2,
 	reduce_3,
 	minimize

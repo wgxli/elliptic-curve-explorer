@@ -3,8 +3,7 @@
 	display: inline-block;
 
 	white-space: nowrap;
-
-	margin: 8px auto 8px auto;
+	margin: 8px auto;
 }
 
 .katex-html {

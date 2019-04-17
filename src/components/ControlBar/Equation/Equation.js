@@ -5,7 +5,12 @@ import Term from './Term/Term.js';
 import './Equation.css';
 
 
-const monomials = ['xy', 'y', 'x^2', 'x', ''];
+const affine_monomials = [
+	'y^2', 'xy', 'y',
+	'x^3', 'x^2', 'x', ''];
+const homogenous_monomials = [
+	'y^2z', 'xyz', 'yz^2',
+	'x^3', 'x^2z', 'xz^2', 'z^3'];
 
 class Equation extends PureComponent {
 	getCoefficientSetter(i) {
@@ -14,25 +19,26 @@ class Equation extends PureComponent {
 		}).bind(this);
 	}
 
-	renderTerm(i) {
+	renderTerm(i, monomial) {
 		return (
 			<Term
 				key={i}
 				coefficient={this.props.coefficients[i]}
-				monomial={monomials[i]}
+				monomial={monomial}
 				setCoefficient={this.getCoefficientSetter(i)}
 			/>);
 	}
 
 	renderTerms() {
+		const monomials = this.props.homogenous ? homogenous_monomials : affine_monomials;
 		const terms = [
-			<InlineMath key={-1}>y^2</InlineMath>,
-			this.renderTerm(0),
-			this.renderTerm(1),
-			<InlineMath key={-2}>= x^3</InlineMath>,
-			this.renderTerm(2),
-			this.renderTerm(3),
-			this.renderTerm(4),
+			<InlineMath key={-1}>{monomials[0]}</InlineMath>,
+			this.renderTerm(0, monomials[1]),
+			this.renderTerm(2, monomials[2]),
+			<InlineMath key={-2}>{`= ${monomials[3]}`}</InlineMath>,
+			this.renderTerm(1, monomials[4]),
+			this.renderTerm(3, monomials[5]),
+			this.renderTerm(4, monomials[6]),
 		];
 		return terms;
 	}

@@ -1,6 +1,17 @@
-.control-bar {
-	white-space: nowrap;
+.control-bar .spacer {
+	flex-grow: 1;
+}
+
+.control-bar .equation-container {
+	display: flex;
 	overflow: hidden;
 
-	z-index: 1000;
+	width: 75%;
+}
+
+.control-bar .options {
+	flex-grow: 1;
+
+	white-space: nowrap;
+	display: inline-block;
 }

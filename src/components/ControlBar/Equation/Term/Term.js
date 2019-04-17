@@ -10,23 +10,8 @@ import './Term.css';
 
 class Term extends PureComponent {
 	handleWheel(e) {
-		const coefficient = this.props.coefficient;
-		const absCoefficient = coefficient.abs();
-
-		var delta;
-		if ((e.deltaY > 0) === coefficient.gt(0)) {
-			delta = absCoefficient.divide(11);
-		} else {
-			delta = absCoefficient.divide(10);
-		}
-
-		delta = delta.add(1);
-
-		if (e.deltaY > 0) {
-			delta = bigInt.zero.minus(delta);
-		}
-
-		this.props.setCoefficient(coefficient.add(delta));
+		const delta = (e.deltaY > 0) ? bigInt(-1) : bigInt(1);
+		this.props.setCoefficient(this.props.coefficient.add(delta));
 	}
 
 	render() {

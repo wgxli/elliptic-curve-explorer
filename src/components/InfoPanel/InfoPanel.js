@@ -19,7 +19,7 @@ const styles = (theme) => ({
 class InfoPanel extends PureComponent {
 	render() {
 		const classes = this.props.classes;
-		const reducedCurve = reduce_full(this.props.curve);
+		const [reducedCurve, map] = reduce_full(this.props.curve);
 
 		return (
 			<Drawer
@@ -31,7 +31,11 @@ class InfoPanel extends PureComponent {
 				}}
 			>
 				<div className={classes.toolbar}/>
-				<Reduction reducedCurve={reducedCurve}/>
+				<Reduction
+					reducedCurve={reducedCurve}
+					map={map}
+					homogenous={this.props.view3D}
+				/>
 			</Drawer>
 		);
 	}
