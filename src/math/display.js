@@ -45,9 +45,24 @@ function renderPolynomial(coefficients, monomials, first=true) {
 	return terms.join('');
 }
 
+function renderFactorization(factorization) {
+	const output = [];
+	
+	for (var [k, v] of factorization) {
+		if (v === 1) {
+			output.push(k);
+		} else {
+			output.push(k + '^{' + v + '}');
+		}
+	}
+
+	return output.join('\\cdot');
+}
+
 
 export {
 	renderCoefficient,
 	renderTerm,
-	renderPolynomial
+	renderPolynomial,
+	renderFactorization
 };

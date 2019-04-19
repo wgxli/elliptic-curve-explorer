@@ -2,47 +2,66 @@ import React, {PureComponent} from 'react';
 
 import Typography from '@material-ui/core/Typography';
 
-import {BlockMath} from 'react-katex';
-import {renderPolynomial} from 'math/display.js';
+import DisplayEquation from 'components/DisplayEquation.js';
+import {renderPolynomial, renderFactorization} from 'math/display.js';
+import {factor} from 'math/numberTheory.js';
 
 import InfoCard, {ExpansionPanel} from '../InfoCard.js';
+
+import * as CURVE from 'math/curve.js';
 
 
 class Reduction extends PureComponent {
 	render() {
-		const homogenous = this.props.homogenous;
+		/***** Render Curve *****/
+		const homogeneous = this.props.homogeneous;
+		const curve_basis = homogeneous ? ['X^3', 'XZ^2', 'Z^3'] : ['X^3', 'X', ''];
+		const [a, b] = CURVE.reduced.curve;
 
-		const map = this.props.map.coefficients;
-		const map_basis = homogenous ? ['x', 'y', 'z'] : ['x', 'y', ''];
-		const multiplier = (this.props.map.denominator.eq(1)) ? '' : `\\frac{1}{${this.props.map.denominator}}`;
+		/***** Render Mapping *****/
+		const map = CURVE.reduced.map;
+		const map_basis = homogeneous ? ['x', 'y', 'z'] : ['x', 'y', ''];
+		const multiplier = (map.denominator.eq(1))
+			? '' : `\\frac{1}{${map.denominator}}`;
 
-		const curve_basis = homogenous ? ['X^3', 'XZ^2', 'Z^3'] : ['X^3', 'X', ''];
+		/***** Render Discriminant *****/
+		const discriminant = CURVE.reduced.discriminant;
+		var factorization = renderFactorization(
+			CURVE.reduced.discriminantFactorization);
+		if (discriminant.lt(0)) {
+			factorization = '-' + factorization;
+		}
 
 		return (
 			<InfoCard title='Reduced Form'>
-				<div className='display-equation' style={{fontSize: 28}}>
-					<BlockMath>
-					{
-						(homogenous ? 'Y^2 Z' : 'Y^2')
-						+ ' = '
-						+ renderPolynomial([1, ...this.props.reducedCurve], curve_basis)
-					}
-					</BlockMath>
-				</div>
+				<DisplayEquation fontSize={28}>
+						{homogeneous ? 'Y^2 Z' : 'Y^2'}
+						=
+						{renderPolynomial([1, a, b], curve_basis)}
+				</DisplayEquation>
 				<hr/>
-				<div className='display-equation' style={{fontSize: 20}}>
-				<BlockMath>
-					{
-						(homogenous ? '[X, Y, Z]' : '(X, Y)')
-						+ ' = '
-						+ multiplier + (homogenous ? '[' : '(')
-						+ renderPolynomial(map.slice(0, 3), map_basis)
-						+ ', '
-						+ renderPolynomial(map.slice(3, 6), map_basis)
-						+ (homogenous ? ', z]' : ')')
-					}
-				</BlockMath>
-				</div>
+				<Typography variant='caption'>Mapping</Typography>
+				<DisplayEquation fontSize={20}>
+					{homogeneous ? '[X, Y, Z]' : '(X, Y)'}
+					=
+					{multiplier + (homogeneous ? '[' : '(')}
+					{renderPolynomial(
+						map.coefficients.slice(0, 3), map_basis)}
+					,
+					{renderPolynomial(
+						map.coefficients.slice(3, 6), map_basis)}
+					{homogeneous ? ', z]' : ')'}
+				</DisplayEquation>
+
+				<Typography variant='caption'>Discriminant</Typography>
+				<DisplayEquation fontSize={20}>
+					{'\\begin{aligned}'}
+						\Delta &=
+						{discriminant}
+						{discriminant.eq(0) ? ''
+								: ('\\\\ &=' + factorization)}
+					{'\\end{aligned}'}
+				</DisplayEquation>
 			</InfoCard>
 		);
 	}

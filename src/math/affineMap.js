@@ -48,6 +48,34 @@ class AffineMap {
 			d.times(C).plus(e.times(F)).plus(f)
 		], this.denominator * other.denominator);
 	}
+
+	inverse() {
+		const [a, b, c, d, e, f] = this.coefficients;
+		const determinant = a.times(e) - b.times(d);
+		const den = this.denominator;
+
+		const coefficients = [
+			e.times(den),
+			bigInt.zero.minus(b).times(den),
+			b.times(f).minus(c.times(e)),
+			bigInt.zero.minus(d).times(den),
+			a.times(den),
+			c.times(d).minus(a.times(f)),
+		];
+
+		return new AffineMap(coefficients, determinant);
+	}
+
+	transformFloat(x, y) {
+		const [a, b, c, d, e, f] = this.coefficients.map(
+			(x) => x.toJSNumber()
+		);
+		const den = this.denominator.toJSNumber();
+		return [
+			(a*x + b*y + c)/den,
+			(d*x + e*y + f)/den
+		];
+	}
 }
 
 const IdentityMap = new AffineMap([1, 0, 0, 0, 1, 0]);

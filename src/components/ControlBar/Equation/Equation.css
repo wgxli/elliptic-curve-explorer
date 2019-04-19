@@ -6,6 +6,31 @@
 	margin: 8px auto;
 }
 
-.katex-html {
-	display: none;
+.equation-term {
+	margin-left: 10px;
+}
+.equation-term.faded {
+	color: #CCC;
+}
+
+/***** Media Queries *****/
+
+@media (max-width: 850px) {
+	.main-equation {
+		font-size: 24px;
+	}
+
+	.equation-term {
+		margin-left: 8px;
+	}
+}
+
+@media (max-width: 600px) {
+	.main-equation {
+		font-size: 18px;
+	}
+
+	.equation-term {
+		margin-left: 5px;
+	}
 }

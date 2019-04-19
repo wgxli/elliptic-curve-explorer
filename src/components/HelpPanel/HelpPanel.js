@@ -5,7 +5,9 @@ import {withStyles} from '@material-ui/core/styles';
 
 const styles = (theme) => ({
 	helpPanelPaper: {
-		backgroundColor: '#EEE'
+		backgroundColor: '#EEE',
+		width: 500,
+		maxWidth: '100%'
 	},
 	toolbar: theme.mixins.toolbar
 });

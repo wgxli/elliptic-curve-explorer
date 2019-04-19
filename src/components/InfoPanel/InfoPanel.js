@@ -4,14 +4,12 @@ import {withStyles} from '@material-ui/core/styles';
 
 import Reduction from './cards/Reduction.js';
 
-import './InfoPanel.css';
-
-import reduce_full from 'math/reduce.js';
-
 
 const styles = (theme) => ({
 	infoPanelPaper: {
-		backgroundColor: '#EEE'
+		backgroundColor: '#EEE',
+		width: 400,
+		maxWidth: '100%'
 	},
 	toolbar: theme.mixins.toolbar
 });
@@ -19,8 +17,6 @@ const styles = (theme) => ({
 class InfoPanel extends PureComponent {
 	render() {
 		const classes = this.props.classes;
-		const [reducedCurve, map] = reduce_full(this.props.curve);
-
 		return (
 			<Drawer
 				open={this.props.open}
@@ -32,9 +28,8 @@ class InfoPanel extends PureComponent {
 			>
 				<div className={classes.toolbar}/>
 				<Reduction
-					reducedCurve={reducedCurve}
-					map={map}
-					homogenous={this.props.view3D}
+					curve={this.props.curve}
+					homogeneous={this.props.view3D}
 				/>
 			</Drawer>
 		);

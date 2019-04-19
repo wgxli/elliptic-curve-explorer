@@ -7,6 +7,9 @@ import InfoPanel from './components/InfoPanel/InfoPanel.js';
 import HelpPanel from './components/HelpPanel/HelpPanel.js';
 import MainView from './components/MainView/MainView.js';
 
+import * as CURVE from './math/curve.js';
+
+import 'katex/dist/katex.min.css';
 import './App.css';
 
 /*
@@ -50,6 +53,7 @@ class App extends PureComponent {
 	}
 
 	render() {
+		CURVE.update(this.state.curve);
 		return (
 			<div className='app'>
 				<ControlBar
@@ -64,13 +68,13 @@ class App extends PureComponent {
 				/>
 				<div className='content'>
 					<InfoPanel
-						open={this.state.infoPanelOpen}
 						curve={this.state.curve}
+						open={this.state.infoPanelOpen}
 						view3D={this.state.view3D}
 					/>
-					<MainView view3D={this.state.view3D}/>
-					<HelpPanel
-						open={this.state.helpPanelOpen}
+					<MainView
+						curve={this.state.curve}
+						view3D={this.state.view3D}
 					/>
 				</div>
 			</div>

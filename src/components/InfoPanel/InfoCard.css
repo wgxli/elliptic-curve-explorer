@@ -1,12 +1,6 @@
 .info-card {
 	margin: 10px;
-	width: 400px;
+	width: calc(100% - 20px);
 
 	overflow: hidden;
-}
-
-.display-equation {
-	font-size: 32px;
-	overflow-x: auto;
-	width: 100%;
 }

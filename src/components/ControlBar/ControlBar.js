@@ -30,7 +30,10 @@ class ControlBar extends PureComponent {
 		const classes = this.props.classes;
 		return (
 			<AppBar className={classes.appBar}>
-				<Toolbar className={classes.controlBar + ' control-bar'}>
+				<Toolbar
+					className={classes.controlBar + ' control-bar'}
+					disableGutters
+				>
 					<IconButton onClick={this.props.handleMenuButton}>
 						<MenuIcon/>
 					</IconButton>
@@ -39,7 +42,7 @@ class ControlBar extends PureComponent {
 						<Equation
 							coefficients={this.props.curve}
 							setCoefficient={this.props.setCoefficient}
-							homogenous={this.props.view3D}
+							homogeneous={this.props.view3D}
 						/>
 					</div>
 					<span className='options'>
@@ -51,9 +54,6 @@ class ControlBar extends PureComponent {
 						/>
 						3D
 					</span>
-					<Button onClick={this.props.handleHelpButton}>
-						Help
-					</Button>
 				</Toolbar>
 			</AppBar>
 		);

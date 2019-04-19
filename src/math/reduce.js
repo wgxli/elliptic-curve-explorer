@@ -95,6 +95,14 @@ function reduce_3(curve) {
 function minimize(curve) {
 	const [a, b] = curve;
 
+	if (a.eq(0) && b.eq(0)) {
+		const map = new AffineMap([
+			6, 0, 0,
+			0, 1, 0
+		], 216);
+		return [curve, map];
+	}
+
 	var gcd = bigInt.gcd(a.pow(3), b.pow(2));
 	var scale = bigInt.one;
 

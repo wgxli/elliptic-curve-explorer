@@ -5,8 +5,6 @@ import bigInt from 'big-integer';
 
 import {renderCoefficient} from 'math/display.js';
 
-import './Term.css';
-
 
 class Term extends PureComponent {
 	handleWheel(e) {
@@ -32,7 +30,7 @@ class Term extends PureComponent {
 				onWheel={this.handleWheel.bind(this)}
 			>
 				<InlineMath>
-					{sign + '\\,' + coefficient + this.props.monomial}
+					{sign + '~' + coefficient + this.props.monomial}
 				</InlineMath>
 			</span>);
 	}

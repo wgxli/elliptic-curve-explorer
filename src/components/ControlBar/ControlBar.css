@@ -1,3 +1,7 @@
+.control-bar {
+	padding: 0 20px;
+}
+
 .control-bar .spacer {
 	flex-grow: 1;
 }
@@ -10,8 +14,19 @@
 }
 
 .control-bar .options {
-	flex-grow: 1;
-
 	white-space: nowrap;
 	display: inline-block;
+}
+
+/***** Media Queries *****/
+@media (max-width: 850px) {
+	.control-bar {
+		padding: 0 10px;
+	}
+}
+
+@media (max-width: 600px) {
+	.control-bar {
+		padding: 0;
+	}
 }

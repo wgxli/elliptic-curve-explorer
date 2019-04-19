@@ -12,7 +12,6 @@ import {withStyles} from '@material-ui/core/styles';
 
 import './InfoCard.css';
 
-
 const styles = (theme) => ({
 	expandButton: {
 		transition: theme.transitions.create('transform', {
@@ -40,7 +39,7 @@ class InfoCard extends PureComponent {
 		return (
 			<Card className='info-card'>
 				<CardContent>
-					<Typography variant='h5' component='h2'>
+					<Typography variant='h5' component='h2' gutterBottom>
 						{this.props.title}
 					</Typography>
 					{this.props.children}
