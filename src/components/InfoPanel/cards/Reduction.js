@@ -8,26 +8,26 @@ import {factor} from 'math/numberTheory.js';
 
 import InfoCard, {ExpansionPanel} from '../InfoCard.js';
 
-import * as CURVE from 'math/curve.js';
-
 
 class Reduction extends PureComponent {
 	render() {
+		const reduced = this.props.curve.reduced;
+
 		/***** Render Curve *****/
 		const homogeneous = this.props.homogeneous;
 		const curve_basis = homogeneous ? ['X^3', 'XZ^2', 'Z^3'] : ['X^3', 'X', ''];
-		const [a, b] = CURVE.reduced.curve;
+		const [a, b] = reduced.coefficients;
 
 		/***** Render Mapping *****/
-		const map = CURVE.reduced.map;
+		const map = reduced.map;
 		const map_basis = homogeneous ? ['x', 'y', 'z'] : ['x', 'y', ''];
 		const multiplier = (map.denominator.eq(1))
 			? '' : `\\frac{1}{${map.denominator}}`;
 
 		/***** Render Discriminant *****/
-		const discriminant = CURVE.reduced.discriminant;
+		const discriminant = reduced.discriminant;
 		var factorization = renderFactorization(
-			CURVE.reduced.discriminantFactorization);
+			reduced.discriminantFactorization);
 		if (discriminant.lt(0)) {
 			factorization = '-' + factorization;
 		}

@@ -1,6 +1,5 @@
 import reduce_full from './reduce.js';
 import {find_roots} from './analysis.js';
-import * as CURVE from './curve.js';
 
 
 const SEGMENTS = 128;
@@ -38,12 +37,12 @@ function affineCurvePoints(a, b) {
 	if (roots.length === 1) {
 		// Single component
 		const root = roots[0];
-		const local_scale = Math.max(Math.abs(root), 1);
-		const multiplier = 2/SEGMENTS;
+		const local_scale = Math.max(Math.abs(root), 1)/200;
+		const multiplier = 15/SEGMENTS;
 
 		const points = [];
 		for (var i = 0; i < SEGMENTS-1; i++) {
-			points.push(root + local_scale * Math.pow(i * multiplier, 5));
+			points.push(root + local_scale * Math.sinh(i * multiplier));
 		}
 		points.push(INFINITY);
 		return [points];
@@ -54,7 +53,7 @@ function affineCurvePoints(a, b) {
 
 		// First component
 		const pointsA = [roots[0]];
-		const omegaA = Math.PI / componentSize;
+		const omegaA = Math.PI / (componentSize-2);
 		const radiusA = (roots[1] - roots[0])/2;
 		const centerA = (roots[0] + roots[1])/2;
 		for (i = 0; i < componentSize-2; i++) {
@@ -66,13 +65,13 @@ function affineCurvePoints(a, b) {
 		pointsA.push(roots[1]);
 
 		// Second component
-		const local_scale = Math.max(Math.abs(roots[2] - roots[0]), 1);
-		const multiplierB = 2/componentSize;
+		const local_scale = Math.max(Math.abs(roots[2] - roots[0]), 1)/200;
+		const multiplierB = 15/componentSize;
 
 		const pointsB = [];
 		for (i = 0; i < componentSize-1; i++) {
 			pointsB.push(roots[2]
-				+ local_scale * Math.pow(i * multiplierB, 5));
+				+ local_scale * Math.sinh(i * multiplierB));
 		}
 		pointsB.push(INFINITY);
 
@@ -92,12 +91,17 @@ function affineCurvePoints(a, b) {
  * each group representing the start and end coordinates
  * of a single line segment.
  *
+ * Input is the 'reduced' attribute of a Curve.
  */
-function affineCurveGeometry() {
+function affineCurveGeometry(reduced) {
 	const output = [];
 
-	const curve = CURVE.reduced.curve;
-	const map = CURVE.reduced.map;
+	if (typeof reduced === 'undefined') {
+		reduced = {coefficients: undefined, map: undefined};
+	}
+
+	const curve = reduced.coefficients;
+	const map = reduced.map;
 
 	// Placeholder for empty curve
 	if (typeof curve !== 'undefined') {
@@ -145,9 +149,12 @@ function affineCurveGeometry() {
 	return output.map((x) => new Float32Array(x));
 }
 
+
+/*
+ * Helper function for curveSurfaceGeometry.
+ */
 function pushPoints(array, x, z) {
 	const alpha = norm(x, z);
-
 	x *= alpha;
 	z *= alpha;
 
@@ -155,10 +162,35 @@ function pushPoints(array, x, z) {
 	array.push(0, 0, 0, -x, -alpha, -z);
 }
 
-function curveSurfaceGeometry() {
-	const affinePoints = affineCurveGeometry();
+
+/*
+ * Constructs the geometry for the curve surface
+ * in projective space (3D view).
+ *
+ * Returns an index array and a Float32Array representing
+ * the positions of the points.
+ *
+ * The position array should be read in groups of three,
+ * each representing the xyz coordinates of a vertex in the geometry.
+ *
+ * If the curve contains two connected components,
+ * the first half of the position array corresponds to the
+ * "loop" component, while the second half corresponds to
+ * the unbounded component.
+ *
+ * If the curve contains one connected component,
+ * the second half of the position array will be padded with zeros.
+ *
+ * For performance reasons, the output of
+ * affineCurveGeometry(curve) is passed as an argument.
+ */
+function curveSurfaceGeometry(affinePoints) {
 	const output = [];
 	const index = [];
+
+	if (typeof affinePoints === 'undefined') {
+		affinePoints = affineCurveGeometry();
+	}
 
 	if (affinePoints.length == 2) {
 		/*** Construct loop component ***/
@@ -170,17 +202,33 @@ function curveSurfaceGeometry() {
 				loopPoints[3*i],
 				loopPoints[3*i+2]);
 			index.push(4*i, 4*i+1, (4*i+5) % (4*nPoints));
-			index.push(4*i+2, 4*i+3, 4*i+7 % (4*nPoints));
+			index.push(4*i+2, 4*i+3, (4*i+7) % (4*nPoints));
 		}
 	}
 
 	/*** Construct unbounded component ***/
 	const mainPoints = affinePoints[0];
+	const nPoints = mainPoints.length/3;
+	const offset = 2*index.length/3;
+
+	// Add points to geometry
 	for (var i = 0; i < mainPoints.length; i += 3) {
 		pushPoints(output, mainPoints[i], mainPoints[i+2]);
 	}
 
-	while (output.length < SEGMENTS * 72) {
+	// Add appropriate indexed triangles
+	for (var i = 0; i < nPoints - 1; i++) {
+		const curr = offset + 4*i;
+		index.push(curr,   curr+1, curr+5);
+		index.push(curr+2, curr+3, curr+7);
+	}
+
+	// Add two indexed triangles for projective point at infinity
+	const last = offset + 4*nPoints - 1;
+	index.push(last-1, last, offset+1);
+	index.push(last-3, last-2, offset+3);
+
+	while (output.length < SEGMENTS * 48) {
 		output.push(0, 0, 0);
 	}
 	return [index, new Float32Array(output)];

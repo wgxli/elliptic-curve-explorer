@@ -63,19 +63,24 @@ yAxis.visible = false;
 scene.add(yAxis);
 
 /** Surfaces (3D) **/
-const curveSurfaceMaterial = new THREE.MeshPhongMaterial({
+// Projective curve surface
+var curveSurfaceMaterial = new THREE.MeshPhongMaterial({
 	color: CURVE_COLOR, side: THREE.DoubleSide,
 	transparent: true, opacity: 0
 });
+
 const curveSurfaceGeo = new THREE.BufferGeometry();
 const [index, geoPoints] = curveSurfaceGeometry();
-curveSurfaceGeo.index = index;
+curveSurfaceGeo.setIndex(index);
 curveSurfaceGeo.addAttribute('position',
 	new THREE.BufferAttribute(geoPoints, 3));
+
 const curveSurface = new THREE.Mesh(curveSurfaceGeo, curveSurfaceMaterial);
 curveSurface.visible = false;
 scene.add(curveSurface);
 
+
+// Plane at y=1
 const planeMaterial = new THREE.MeshPhongMaterial({
 	color: 0x888888, side: THREE.DoubleSide,
 	transparent: true, opacity: 0
@@ -121,16 +126,16 @@ function initialize() {
 	orbitControls = new OrbitControls(camera, canvas);
 	orbitControls.dampingFactor = 0.15;
 	orbitControls.rotateSpeed = 0.15;
+	orbitControls.screenSpacePanning = true;
 }
 
 function update() {
 	if (orbitControls.enabled) {orbitControls.update();}
 
-	const uxScale = Math.max(camera.position.length(), 1);
+	const uxScale = 10 * Math.max(camera.position.length(), 0.1);
 	axes.scale.setScalar(uxScale);
 	plane.scale.setScalar(uxScale);
 	yAxis.scale.setScalar(uxScale);
-
 	curveSurface.scale.setScalar(uxScale);
 
 	light.position.copy(camera.position);

@@ -23,7 +23,7 @@ for (var i=2; i < 300000; i++) {
  */
 function factor(n) {
 	n = bigInt(n);
-	if (n.lt(1)) {
+	if (n.lt(2)) {
 		return [];
 	}
 

@@ -40,7 +40,7 @@ class ControlBar extends PureComponent {
 					<div className='spacer'/>
 					<div className='equation-container'>
 						<Equation
-							coefficients={this.props.curve}
+							coefficients={this.props.curve.coefficients}
 							setCoefficient={this.props.setCoefficient}
 							homogeneous={this.props.view3D}
 						/>

@@ -15,10 +15,16 @@ class AffineMap {
 	 *
 	 * All coefficients are implicitly divided by 'denominator'.
 	 * This allows the use of bigInt arithmetic.
+	 *
+	 * Precondition: denominator is nonzero
 	 */
 	constructor(coefficients, denominator=1) {
 		this.coefficients = coefficients.map((x) => bigInt(x));
 		this.denominator = bigInt(denominator);
+		if (this.denominator.lt(0)) {
+			this.denominator = this.denominator.abs();
+			this.coefficients = this.coefficients.map((x) => bigInt.zero.minus(x));
+		}
 		this.reduce();
 	}
 	
@@ -42,16 +48,16 @@ class AffineMap {
 		return new AffineMap([
 			a.times(A).plus(b.times(D)),
 			a.times(B).plus(b.times(E)),
-			a.times(C).plus(b.times(F)).plus(c),
+			a.times(C).plus(b.times(F)).plus(c.times(other.denominator)),
 			d.times(A).plus(e.times(D)),
 			d.times(B).plus(e.times(E)),
-			d.times(C).plus(e.times(F)).plus(f)
-		], this.denominator * other.denominator);
+			d.times(C).plus(e.times(F)).plus(f.times(other.denominator))
+		], this.denominator.times(other.denominator));
 	}
 
 	inverse() {
 		const [a, b, c, d, e, f] = this.coefficients;
-		const determinant = a.times(e) - b.times(d);
+		const determinant = a.times(e).minus(b.times(d));
 		const den = this.denominator;
 
 		const coefficients = [
@@ -75,6 +81,18 @@ class AffineMap {
 			(a*x + b*y + c)/den,
 			(d*x + e*y + f)/den
 		];
+	}
+
+	toString() {
+		const [a, b, c, d, e, f] = this.coefficients;
+		const D = this.denominator;
+
+		const mapString = `(x, y) -> (${a}x + ${b}y + ${c}, ${d}x + ${e}y + f)`;
+		if (D.eq(1)) {
+			return mapString;
+		} else {
+			return mapString + ' / ' + D.toString();
+		}
 	}
 }
 

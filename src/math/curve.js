@@ -1,31 +1,49 @@
-/***** This file acts as a cache for computationally-intensive elliptic curve properties. *****/
-import reduce_full from './reduce.js';
+import bigInt from 'big-integer';
+
+import reduceFull from './reduce.js';
 import {factor} from './numberTheory.js';
 
 
-
-/***** Cached Properties *****/
-var curve = [];
-var reduced = {};
-
-
-/***** Update Methods *****/
-
-/* 
- * Update the current elliptic curve
- * and recompute all its derived properties.
+/*
+ * Represents an elliptic curve with equation
+ * y^2 + axy + cy = x^3 + bx^2 + dx + e.
  */
-function update(newCurve) {
-	curve = newCurve;
+class Curve {
+	constructor(...coefficients) {
+		this.coefficients = coefficients.map((x) => bigInt(x));
+		this.computeReduction();
+	}
 
-	[reduced.curve, reduced.map] = reduce_full(curve);
-	const [a, b] = reduced.curve
-	reduced.discriminant = a.pow(3).times(4).plus(
-		b.pow(2).times(27)).times(-16);
-	reduced.discriminantFactorization = factor(reduced.discriminant.abs());
+	computeReduction() {
+		const [curve, map] = reduceFull(this.coefficients);
+		this.reduced = new ReducedCurve(curve, map);
+	}
 }
 
-export {
-	update,
-	curve, reduced,
-};
+
+/*
+ * Represents an elliptic curve with equation
+ * y^2 = x^3 + ax + b.
+ */
+class ReducedCurve extends Curve {
+	constructor(coefficients, map) {
+		super(...coefficients);
+		this.map = map;
+
+		this.computeDiscriminant();
+	}
+
+	computeReduction() {
+		this.reduced = this;
+	}
+
+	computeDiscriminant() {
+		const [a, b] = this.coefficients;
+		this.discriminant = a.pow(3).times(4).plus(
+			b.pow(2).times(27)
+		).times(-16);
+		this.discriminantFactorization = factor(this.discriminant.abs());
+	}
+}
+
+export default Curve;

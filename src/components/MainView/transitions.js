@@ -110,7 +110,7 @@ function toggleSurfacesTransition(now, view3D, start, stop) {
 	const beta = view3D ? alpha : (1-alpha);
 
 	SCENE.plane.material.opacity = 0.6 * beta;
-	SCENE.curveSurface.material.opacity = 1 * beta;
+	SCENE.curveSurface.material.opacity = 0.95 * beta;
 	SCENE.yAxis.material.opacity = beta;
 
 	if (now > stop) {

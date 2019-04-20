@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import * as SCENE from './scene.js';
 import * as TRANS from './transitions.js';
 
-import * as CURVE from 'math/curve.js';
 import {affineCurveGeometry, curveSurfaceGeometry} from 'math/graphics.js';
 
 /***** State *****/
@@ -55,8 +54,8 @@ function render() {
 	animate();
 }
 
-function updateCurve() {
-	const curveGeo = affineCurveGeometry();
+function updateCurve(curve) {
+	const curveGeo = affineCurveGeometry(curve.reduced);
 
 	const geoA = SCENE.curveLineA.geometry;
 	const posA = geoA.attributes.position;
@@ -80,13 +79,16 @@ function updateCurve() {
 	if (view3D) {
 		const surfaceGeo = SCENE.curveSurface.geometry;
 		const surfacePos = surfaceGeo.attributes.position;
-		const [index, geoPoints] = curveSurfaceGeometry();
-		surfaceGeo.index = index;
+
+		const [index, geoPoints] = curveSurfaceGeometry(curveGeo);
+		surfaceGeo.setIndex(index);
 		surfacePos.copyArray(geoPoints);
 		surfacePos.needsUpdate = true;
+
 		surfaceGeo.computeBoundingSphere();
 		surfaceGeo.computeVertexNormals();
 	}
+
 }
 
 function set3D(newView3D) {

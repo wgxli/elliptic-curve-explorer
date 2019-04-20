@@ -7,7 +7,7 @@ import InfoPanel from './components/InfoPanel/InfoPanel.js';
 import HelpPanel from './components/HelpPanel/HelpPanel.js';
 import MainView from './components/MainView/MainView.js';
 
-import * as CURVE from './math/curve.js';
+import Curve from './math/curve.js';
 
 import 'katex/dist/katex.min.css';
 import './App.css';
@@ -28,7 +28,7 @@ class App extends PureComponent {
 
 		this.state = {
 			curve: initialCurve.map((x) => bigInt(x)),
-			infoPanelOpen: true,
+			infoPanelOpen: window.innerWidth > 800,
 			view3D: false,
 			helpPanelOpen: false
 		}
@@ -53,11 +53,11 @@ class App extends PureComponent {
 	}
 
 	render() {
-		CURVE.update(this.state.curve);
+		const curve = new Curve(...this.state.curve);
 		return (
 			<div className='app'>
 				<ControlBar
-					curve={this.state.curve}
+					curve={curve}
 					setCoefficient={this.setCoefficient.bind(this)}
 
 					handleMenuButton={this.toggleInfoPanel.bind(this)}
@@ -68,12 +68,12 @@ class App extends PureComponent {
 				/>
 				<div className='content'>
 					<InfoPanel
-						curve={this.state.curve}
+						curve={curve}
 						open={this.state.infoPanelOpen}
 						view3D={this.state.view3D}
 					/>
 					<MainView
-						curve={this.state.curve}
+						curve={curve}
 						view3D={this.state.view3D}
 					/>
 				</div>

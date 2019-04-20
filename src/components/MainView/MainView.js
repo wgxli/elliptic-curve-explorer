@@ -10,7 +10,7 @@ class MainView extends PureComponent {
 
 	update() {
 		set3D(this.props.view3D);
-		updateCurve();
+		updateCurve(this.props.curve);
 	}
 
 	render() {

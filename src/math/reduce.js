@@ -14,7 +14,7 @@ import AffineMap, {IdentityMap} from './affineMap.js';
  * Returns the coefficients [a_i] of the transformed
  * equation and the map (x, y) -> (X, Y).
  */
-function reduce_1(curve) {
+function reduce1(curve) {
 	// NOT IMPLEMENTED
 	return curve;
 }
@@ -35,7 +35,7 @@ function reduce_1(curve) {
  * Returns the coefficients [A, B, C] of the transformed
  * equation and the map (x, y) -> (X, Y).
  */
-function reduce_2(curve) {
+function reduce2(curve) {
 	const [a, b, c, d, e] = curve;
 	const coefficients = [
 		b.times(4).plus(a.times(a)),
@@ -62,7 +62,7 @@ function reduce_2(curve) {
  * Returns the coefficients [A, B]
  * and the map (x, y) -> (X, Y).
  */
-function reduce_3(curve) {
+function reduce3(curve) {
 	const [a, b, c] = curve;
 	const coefficients = [
 		b.times(3).minus(a.times(a)).times(27),
@@ -134,24 +134,24 @@ function minimize(curve) {
  */
 function compose(functions) {
 	return (function(curve) {
-		var overall_map = IdentityMap;
+		var overallMap = IdentityMap;
 		var map;
 
 		for (var f of functions) {
 			[curve, map] = f(curve);
-			overall_map = map.compose(overall_map);
+			overallMap = map.compose(overallMap);
 		}
 
-		return [curve, overall_map];
+		return [curve, overallMap];
 	});
 }
 
-const reduce_full = compose([reduce_2, reduce_3, minimize]);
+const reduceFull = compose([reduce2, reduce3, minimize]);
 
 export {
-	reduce_1,
-	reduce_2,
-	reduce_3,
+	reduce1,
+	reduce2,
+	reduce3,
 	minimize
 };
-export default reduce_full;
+export default reduceFull;
