@@ -18,6 +18,16 @@ class Curve {
 		const [curve, map] = reduceFull(this.coefficients);
 		this.reduced = new ReducedCurve(curve, map);
 	}
+
+	toString() {
+		const [a, b, c, d, e] = this.coefficients;
+		return 'y\u00B2 + '
+			+ a.toString() + 'xy + '
+			+ c.toString() + 'y = x\u00B3 + '
+			+ b.toString() + 'x\u00B2 + '
+			+ d.toString() + 'x + '
+			+ e.toString();
+	}
 }
 
 
@@ -44,6 +54,12 @@ class ReducedCurve extends Curve {
 		).times(-16);
 		this.discriminantFactorization = factor(this.discriminant.abs());
 	}
+
+	toString() {
+		const [a, b] = this.coefficients;
+		return 'y\u00B2 = x\u00B3 + ' + a.toString() + 'x + ' + b.toString();
+	}
 }
 
 export default Curve;
+export {ReducedCurve};

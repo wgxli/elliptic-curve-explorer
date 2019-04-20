@@ -4,14 +4,14 @@ import bigInt from 'big-integer';
 class BigRational {
 	constructor(numerator, denominator=1) {
 		if (numerator instanceof BigRational) {
-			this.n = other.n;
-			this.d = other.d;
+			this.n = numerator.n;
+			this.d = numerator.d;
 		} else {
 			this.n = bigInt(numerator);
 			this.d = bigInt(denominator);
 			if (this.d.lt(0)) {
 				this.d = this.d.abs();
-				this.n = bigInt.zero.minus(n);
+				this.n = bigInt.zero.minus(this.n);
 			}
 			this.reduce();
 		}
@@ -47,6 +47,7 @@ class BigRational {
 	}
 
 	times(other) {
+		other = new BigRational(other);
 		return new BigRational(this.n.times(other.n), this.d.times(other.d));
 	}
 
@@ -54,14 +55,41 @@ class BigRational {
 		return this.times(other.reciprocal());
 	}
 
+	pow(other) {
+		if (other === 0) {return new BigRational(1)};
+		if (other < 0) {return this.reciprocal().pow(Math.abs(other))};
+
+		// Construct powers of two for efficiency
+		var exponent = 0;
+		var curr = this;
+		const powers = [curr];
+
+		while (other > Math.pow(2, exponent)) {
+			exponent++;
+			curr = curr.times(curr);
+			powers.push(curr);
+		}
+
+		// Compute answer
+		var answer = new BigRational(1);
+		for (var i=0; i <= exponent; i++) {
+			if ((other >> i) % 2 === 1) {
+				answer = answer.times(powers[i]);
+			}
+		}
+
+		return answer;
+	}
+
 
 	/***** Comparison Operators *****/
 	eq(other) {
-		// Assume this and other are reduced
+		other = new BigRational(other);
 		return this.n.eq(other.n) && this.d.eq(other.d);
 	}
 
 	gt(other) {
+		other = new BigRational(other);
 		return this.n.times(other.d).gt(other.n.times(this.d));
 	}
 
@@ -75,7 +103,11 @@ class BigRational {
 
 	/***** Utility Functions *****/
 	toString() {
-		return this.n.toString() + '/' + this.d.toString();
+		if (this.d.eq(1)) {
+			return this.n.toString();
+		} else {
+			return this.n.toString() + '/' + this.d.toString();
+		}
 	}
 }
 
