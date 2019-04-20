@@ -12,7 +12,7 @@ import BigRational from './bigRational.js';
 class RationalPoint {
 	constructor(reducedCurve, x, y) {
 		this.curve = reducedCurve.reduced;
-		if (isNaN(x)) {
+		if (Number.isNaN(x)) {
 			this.x = NaN;
 			this.y = NaN;
 		} else {

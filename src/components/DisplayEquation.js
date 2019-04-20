@@ -5,7 +5,12 @@ import {InlineMath} from 'react-katex';
 
 class DisplayEquation extends PureComponent {
 	render() {
-		const latex = this.props.children.map((x) => x.toString()).join('');
+		var latex;
+		if (typeof this.props.children.map === 'undefined') {
+			latex = this.props.children.toString();
+		} else {
+			latex = this.props.children.map((x) => x.toString()).join('');
+		}
 
 		return (
 			<div

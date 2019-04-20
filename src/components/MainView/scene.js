@@ -13,7 +13,6 @@ const camera = new THREE.PerspectiveCamera(
 var orbitControls;
 
 const CURVE_COLOR = 0x7EEDED;
-const CURVE_SURFACE_COLOR = 0x58B083;
 
 
 
@@ -104,11 +103,13 @@ scene.add(directionalLight.target);
 const light = new THREE.PointLight(0xFFFFFF, 0.7);
 scene.add(light);
 
+/*
 const testCube = new THREE.Mesh(
 	new THREE.BoxBufferGeometry(1, 1, 1),
 	new THREE.MeshLambertMaterial({color: 0xFF0000})
 );
-//scene.add(testCube);
+scene.add(testCube);
+*/
 
 
 

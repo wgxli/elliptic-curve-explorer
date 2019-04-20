@@ -1,5 +1,4 @@
-import reduce_full from './reduce.js';
-import {find_roots} from './analysis.js';
+import {findRoots} from './analysis.js';
 
 
 const SEGMENTS = 128;
@@ -10,7 +9,7 @@ function norm(x, z) {
 }
 
 function affineCurvePoints(a, b) {
-	const roots = find_roots(a, b);
+	const roots = findRoots(a, b);
 	const f = (x) => Math.pow(x, 3) + a*x + b;
 	var multiComponent = true;
 
@@ -192,7 +191,7 @@ function curveSurfaceGeometry(affinePoints) {
 		affinePoints = affineCurveGeometry();
 	}
 
-	if (affinePoints.length == 2) {
+	if (affinePoints.length === 2) {
 		/*** Construct loop component ***/
 		const loopPoints = affinePoints.shift();
 		const nPoints = loopPoints.length/3;
@@ -212,12 +211,12 @@ function curveSurfaceGeometry(affinePoints) {
 	const offset = 2*index.length/3;
 
 	// Add points to geometry
-	for (var i = 0; i < mainPoints.length; i += 3) {
+	for (i = 0; i < mainPoints.length; i += 3) {
 		pushPoints(output, mainPoints[i], mainPoints[i+2]);
 	}
 
 	// Add appropriate indexed triangles
-	for (var i = 0; i < nPoints - 1; i++) {
+	for (i = 0; i < nPoints - 1; i++) {
 		const curr = offset + 4*i;
 		index.push(curr,   curr+1, curr+5);
 		index.push(curr+2, curr+3, curr+7);

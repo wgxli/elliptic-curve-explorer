@@ -52,7 +52,7 @@ class InfoCard extends PureComponent {
 class ExpansionPanel extends PureComponent {
 	constructor(props) {
 		super(props);
-		this.state = {expanded: true};
+		this.state = {expanded: false};
 	}
 
 	toggleOpen() {

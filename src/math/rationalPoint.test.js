@@ -70,7 +70,7 @@ it('explicit verification of multiplication', () => {
 });
 
 /***** Group Theory *****/
-it('explicit verification for simple curve', () => {
+it('explicit verification for y^2 = x^3 + 1', () => {
 	const curve = new Curve(0, 0, 0, 0, 1);
 	const a = new RationalPoint(curve, 2, 3);
 	const b = new RationalPoint(curve, 0, 1);
@@ -78,6 +78,14 @@ it('explicit verification for simple curve', () => {
 	expect(a.order()).toBe(6);
 	expect(b.order()).toBe(3);
 	expect(c.order()).toBe(2);
+});
+
+it('explicit verification for y^2 = x^3 + 8', () => {
+	const curve = new Curve(0, 0, 0, 0, 8);
+	const a = new RationalPoint(curve, 2, 4);
+	const b = new RationalPoint(curve, -2, 0);
+	expect(a.order()).toBe(Infinity);
+	expect(b.order()).toBe(2);
 });
 
 /***** Helper Functions *****/

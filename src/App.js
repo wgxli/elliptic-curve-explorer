@@ -4,7 +4,7 @@ import bigInt from 'big-integer';
 
 import ControlBar from './components/ControlBar/ControlBar.js';
 import InfoPanel from './components/InfoPanel/InfoPanel.js';
-import HelpPanel from './components/HelpPanel/HelpPanel.js';
+//import HelpPanel from './components/HelpPanel/HelpPanel.js';
 import MainView from './components/MainView/MainView.js';
 
 import Curve from './math/curve.js';

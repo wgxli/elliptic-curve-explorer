@@ -1,7 +1,7 @@
 /*
  * Finds the real roots of f(x) = x^3 + ax + b.
  */
-function find_roots(a, b) {
+function findRoots(a, b) {
 	if (a === 0) {
 		return [-Math.cbrt(b)];
 	}
@@ -36,4 +36,4 @@ function find_roots(a, b) {
 	}
 }
 
-export {find_roots};
+export {findRoots};

@@ -1,4 +1,5 @@
 import bigInt from 'big-integer';
+import BigRational from './bigRational.js';
 
 /*
  * Represents the affine map
@@ -83,11 +84,22 @@ class AffineMap {
 		];
 	}
 
+	transformBigRational(x, y) {
+		const [a, b, c, d, e, f] = this.coefficients.map(
+			(x) => new BigRational(x)
+		);
+		const den = new BigRational(this.denominator);
+		return [
+			a.times(x).plus(b.times(y)).plus(c).divide(den),
+			d.times(x).plus(e.times(y)).plus(f).divide(den),
+		];
+	}
+
 	toString() {
 		const [a, b, c, d, e, f] = this.coefficients;
 		const D = this.denominator;
 
-		const mapString = `(x, y) -> (${a}x + ${b}y + ${c}, ${d}x + ${e}y + f)`;
+		const mapString = `(x, y) -> (${a}x + ${b}y + ${c}, ${d}x + ${e}y + ${f})`;
 		if (D.eq(1)) {
 			return mapString;
 		} else {

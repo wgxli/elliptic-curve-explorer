@@ -3,6 +3,7 @@ import Drawer from '@material-ui/core/Drawer';
 import {withStyles} from '@material-ui/core/styles';
 
 import Reduction from './cards/Reduction.js';
+import GroupStructure from './cards/GroupStructure.js';
 
 
 const styles = (theme) => ({
@@ -28,6 +29,10 @@ class InfoPanel extends PureComponent {
 			>
 				<div className={classes.toolbar}/>
 				<Reduction
+					curve={this.props.curve}
+					homogeneous={this.props.view3D}
+				/>
+				<GroupStructure
 					curve={this.props.curve}
 					homogeneous={this.props.view3D}
 				/>
