@@ -107,12 +107,16 @@ class RationalPoint {
 	/***** Group Theory *****/
 	order() {
 		var curr = this;
-		for (var i = 1; i <= 12; i++) {
-			if (curr.isIdentity()) {return i;}
+		for (let i = 1; i <= 12; i++) {
+			if (curr.isIdentity()) {
+				this.order = () => i;
+				return i;
+			}
 			curr = curr.plus(this);
 		}
 		
 		// By Mazur's theorem
+		this.order = () => Infinity;
 		return Infinity;
 	}
 
