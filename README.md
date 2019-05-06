@@ -1,4 +1,4 @@
-# Elliptic Curve Explorer <img src="public/android-chrome-192x192.png" width=32 alt="App Icon">
+# Elliptic Curve Explorer <img src="public/favicons/android-chrome-192x192.png" width=32 alt="App Icon">
 An interactive [visualization](https://wgxli.github.io/elliptic-curve-explorer) of rational elliptic curves.
 
 ![Screenshot of 2D view.](images/screenshot-2d.png)
