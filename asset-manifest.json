@@ -1,16 +1,16 @@
 {
-  "main.css": "/elliptic-curve-explorer/static/css/main.2c6db84c.chunk.css",
-  "main.js": "/elliptic-curve-explorer/static/js/main.29ca1eac.chunk.js",
-  "main.js.map": "/elliptic-curve-explorer/static/js/main.29ca1eac.chunk.js.map",
+  "main.css": "/elliptic-curve-explorer/static/css/main.90c0ebf8.chunk.css",
+  "main.js": "/elliptic-curve-explorer/static/js/main.2e8cce9d.chunk.js",
+  "main.js.map": "/elliptic-curve-explorer/static/js/main.2e8cce9d.chunk.js.map",
   "runtime~main.js": "/elliptic-curve-explorer/static/js/runtime~main.6ce6a14d.js",
   "runtime~main.js.map": "/elliptic-curve-explorer/static/js/runtime~main.6ce6a14d.js.map",
   "static/css/2.49b0ac8b.chunk.css": "/elliptic-curve-explorer/static/css/2.49b0ac8b.chunk.css",
-  "static/js/2.31fa6344.chunk.js": "/elliptic-curve-explorer/static/js/2.31fa6344.chunk.js",
-  "static/js/2.31fa6344.chunk.js.map": "/elliptic-curve-explorer/static/js/2.31fa6344.chunk.js.map",
+  "static/js/2.74bcd266.chunk.js": "/elliptic-curve-explorer/static/js/2.74bcd266.chunk.js",
+  "static/js/2.74bcd266.chunk.js.map": "/elliptic-curve-explorer/static/js/2.74bcd266.chunk.js.map",
   "index.html": "/elliptic-curve-explorer/index.html",
-  "precache-manifest.9d175940eff75f072bda2a3ab0815aa7.js": "/elliptic-curve-explorer/precache-manifest.9d175940eff75f072bda2a3ab0815aa7.js",
+  "precache-manifest.fe0edfeac8d174334c17427768eaa102.js": "/elliptic-curve-explorer/precache-manifest.fe0edfeac8d174334c17427768eaa102.js",
   "service-worker.js": "/elliptic-curve-explorer/service-worker.js",
   "static/css/2.49b0ac8b.chunk.css.map": "/elliptic-curve-explorer/static/css/2.49b0ac8b.chunk.css.map",
-  "static/css/main.2c6db84c.chunk.css.map": "/elliptic-curve-explorer/static/css/main.2c6db84c.chunk.css.map",
+  "static/css/main.90c0ebf8.chunk.css.map": "/elliptic-curve-explorer/static/css/main.90c0ebf8.chunk.css.map",
   "static/media/katex.min.css": "/elliptic-curve-explorer/static/media/KaTeX_Typewriter-Regular.e52da442.woff"
 }
