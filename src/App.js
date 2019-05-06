@@ -10,7 +10,11 @@ import MainView from './components/MainView/MainView.js';
 import Curve from './math/curve.js';
 
 import 'katex/dist/katex.min.css';
+
+import {MuiThemeProvider} from '@material-ui/core/styles';
+import theme from './theme.js';
 import './App.css';
+
 
 /*
  * curve: An array of six BigInts representing the currently shown elliptic curve.
@@ -55,7 +59,7 @@ class App extends PureComponent {
 	render() {
 		const curve = new Curve(...this.state.curve);
 		return (
-			<div className='app'>
+			<MuiThemeProvider theme={theme}>
 				<ControlBar
 					curve={curve}
 					setCoefficient={this.setCoefficient.bind(this)}
@@ -77,7 +81,7 @@ class App extends PureComponent {
 						view3D={this.state.view3D}
 					/>
 				</div>
-			</div>
+			</MuiThemeProvider>
 		);
 	}
 }

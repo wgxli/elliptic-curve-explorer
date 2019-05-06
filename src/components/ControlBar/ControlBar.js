@@ -14,7 +14,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Equation from './Equation/Equation.js';
 import './ControlBar.css';
 
-const styles = {
+const styles = theme => ({
 	appBar: {
 		zIndex: 5000
 	},
@@ -23,7 +23,7 @@ const styles = {
 		color: 'black',
 		flexDirection: 'row',
 	}
-}
+});
 
 class ControlBar extends PureComponent {
 	render() {
@@ -45,6 +45,7 @@ class ControlBar extends PureComponent {
 							homogeneous={this.props.view3D}
 						/>
 					</div>
+					<div className='spacer'/>
 					<span className='options'>
 						2D
 						<Switch

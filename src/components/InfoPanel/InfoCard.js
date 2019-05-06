@@ -10,8 +10,6 @@ import Collapse from '@material-ui/core/Collapse';
 
 import {withStyles} from '@material-ui/core/styles';
 
-import './InfoCard.css';
-
 const styles = (theme) => ({
 	expandButton: {
 		transition: theme.transitions.create('transform', {
@@ -63,7 +61,7 @@ class ExpansionPanel extends PureComponent {
 		const classes = this.props.classes;
 
 		return (
-			<div>
+			<div style={{marginBottom: '-12px'}}>
 				<div className={classes.buttonContainer}>
 					<div className={classes.spacer}/>
 					<IconButton

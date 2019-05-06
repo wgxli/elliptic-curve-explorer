@@ -8,6 +8,7 @@
 
 .equation-term {
 	margin-left: 10px;
+	cursor: ew-resize;
 }
 .equation-term.faded {
 	color: #CCC;
@@ -25,12 +26,8 @@
 	}
 }
 
-@media (max-width: 600px) {
-	.main-equation {
-		font-size: 18px;
-	}
-
-	.equation-term {
-		margin-left: 5px;
+@media (max-width: 700px) {
+	.mobile-break {
+		display: block;
 	}
 }

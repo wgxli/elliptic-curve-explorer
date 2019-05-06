@@ -5,12 +5,13 @@ import {withStyles} from '@material-ui/core/styles';
 import Reduction from './cards/Reduction.js';
 import GroupStructure from './cards/GroupStructure.js';
 
+import './InfoPanel.css';
+
 
 const styles = (theme) => ({
 	infoPanelPaper: {
 		backgroundColor: '#EEE',
-		width: 400,
-		maxWidth: '100%'
+		display: 'block'
 	},
 	toolbar: theme.mixins.toolbar
 });
@@ -24,10 +25,10 @@ class InfoPanel extends PureComponent {
 				variant='persistent'
 				className={classes.infoPanel}
 				classes={{
-					paper: classes.infoPanelPaper
+					paper: classes.infoPanelPaper + ' info-panel-paper'
 				}}
 			>
-				<div className={classes.toolbar}/>
+				<div className={classes.toolbar + ' toolbar-padding'}/>
 				<Reduction
 					curve={this.props.curve}
 					homogeneous={this.props.view3D}

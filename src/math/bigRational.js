@@ -18,6 +18,7 @@ class BigRational {
 	}
 
 	reduce() {
+		if (this.d.eq(1)) {return;}
 		const gcd = bigInt.gcd(this.d, this.n);
 		this.n = this.n.divide(gcd);
 		this.d = this.d.divide(gcd);

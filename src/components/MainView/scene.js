@@ -12,7 +12,7 @@ const camera = new THREE.PerspectiveCamera(
 	1e-2, 1e8);
 var orbitControls;
 
-const CURVE_COLOR = 0x7EEDED;
+const CURVE_COLOR = 0x66B5F3;
 
 
 

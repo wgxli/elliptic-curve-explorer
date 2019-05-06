@@ -7,10 +7,8 @@
 }
 
 .control-bar .equation-container {
-	display: flex;
+	display: block;
 	overflow: hidden;
-
-	width: 75%;
 }
 
 .control-bar .options {
@@ -25,8 +23,13 @@
 	}
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 	.control-bar {
 		padding: 0;
+	}
+
+	.control-bar .options {
+		width: 1px;
+		overflow: hidden;
 	}
 }

@@ -60,7 +60,6 @@ class GroupStructure extends PureComponent {
 		} else if ([2, 3, 5, 6, 7, 9].includes(order)) {
 			group = cyclic(order);
 		} else {
-			console.log(orders, order);
 			group = orders.includes(order)
 				? cyclic(order)
 				: '(' + cyclic(order/2) + '\\times' + cyclic(2) + ')';
