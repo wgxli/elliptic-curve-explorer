@@ -4,6 +4,8 @@
 
 	white-space: nowrap;
 	margin: 8px auto;
+
+	user-select: none;
 }
 
 .equation-term {
