@@ -1,11 +1,22 @@
 import bigInt from 'big-integer';
 
 // Precompute small primes
-const small_primes = [];
-for (var i=2; i < 300000; i++) {
-	if (bigInt(i).isProbablePrime()) {
-		small_primes.push(bigInt(i));
+const MAX = 300000;
+const sieve = new Array(MAX).fill(true);
+
+sieve[0] = false;
+sieve[1] = false;
+for (let i=2; i < Math.sqrt(MAX); i++) {
+	if (sieve[i]) {
+		for (let j = i*i; j < MAX; j+= i) {
+			sieve[j] = false;
+		}
 	}
+}
+
+const small_primes = [];
+for (let i=2; i < MAX; i++) {
+	if (sieve[i]) {small_primes.push(bigInt(i));}
 }
 
 /*
