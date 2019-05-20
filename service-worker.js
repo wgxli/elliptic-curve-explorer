@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/elliptic-curve-explorer/precache-manifest.f5611083fda391f7272340910d572a69.js"
+  "/elliptic-curve-explorer/precache-manifest.d1ecafb08935c180613d442ea9bbcfd3.js"
 );
 
 workbox.clientsClaim();
