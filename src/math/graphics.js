@@ -1,7 +1,8 @@
 import {findRoots} from './analysis.js';
 
 
-const SEGMENTS = 128;
+const SEGMENTS = 64;
+const DIVISIONS = 3;
 const INFINITY = 1e5;
 
 function norm(x, z) {
@@ -157,8 +158,10 @@ function pushPoints(array, x, z) {
     x *= alpha;
     z *= alpha;
 
-    array.push(0, 0, 0, x, alpha, z);
-    array.push(0, 0, 0, -x, -alpha, -z);
+    for (let i = -DIVISIONS; i <= DIVISIONS; i++) {
+        const f = i / DIVISIONS;
+        array.push(f*x, f*alpha, f*z);
+    }
 }
 
 
@@ -186,50 +189,81 @@ function pushPoints(array, x, z) {
 function curveSurfaceGeometry(affinePoints) {
     const output = [];
     const index = [];
+    const step = 2 * DIVISIONS + 1;
 
     if (typeof affinePoints === 'undefined') {
         affinePoints = affineCurveGeometry();
     }
 
+    let offset = 0;
     if (affinePoints.length === 2) {
         /*** Construct loop component ***/
         const loopPoints = affinePoints.shift();
         const nPoints = loopPoints.length/3;
 
+        const total = step * nPoints;
+        const getPoint = (a, b) => ((step * a) + b + DIVISIONS + total) % total;
+        const makeTriangle = (a, b, c, d, e, f) => {
+            index.push(getPoint(a, b), getPoint(c, d), getPoint(e, f));
+            index.push(getPoint(a, -b), getPoint(c, -d), getPoint(e, -f));
+        };
+
         for (var i = 0; i < nPoints; i++) {
-            pushPoints(output,
-                loopPoints[3*i],
-                loopPoints[3*i+2]);
-            index.push(4*i, 4*i+1, (4*i+5) % (4*nPoints));
-            index.push(4*i+2, 4*i+3, (4*i+7) % (4*nPoints));
+            pushPoints(output, loopPoints[3*i], loopPoints[3*i+2]);
+
+            for (let j = 1; j <= DIVISIONS; j++) {
+                makeTriangle(i, j, i+1, j, i, j-1);
+                if (j > 1) {
+                    makeTriangle(i, j, i, j-1, i-1, j-1);
+                }
+            }
         }
+
+        offset = total;
     }
 
     /*** Construct unbounded component ***/
     const mainPoints = affinePoints[0];
-    const nPoints = mainPoints.length/3;
-    const offset = 2*index.length/3;
 
     // Add points to geometry
     for (i = 0; i < mainPoints.length; i += 3) {
         pushPoints(output, mainPoints[i], mainPoints[i+2]);
     }
 
+    const nPoints = mainPoints.length/3;
+    const total = nPoints * step;
+
+    const getPoint = (a, b) => (((step * a) + b + DIVISIONS + total) % total) + offset;
+    const makeTriangle = (a, b, c, d, e, f) => {
+        index.push(getPoint(a, b), getPoint(c, d), getPoint(e, f));
+        index.push(getPoint(a, -b), getPoint(c, -d), getPoint(e, -f));
+    };
+
+
     // Add appropriate indexed triangles
-    for (i = 0; i < nPoints - 1; i++) {
-        const curr = offset + 4*i;
-        index.push(curr,   curr+1, curr+5);
-        index.push(curr+2, curr+3, curr+7);
+    for (i = 1; i < nPoints - 1; i++) {
+        for (let j = 1; j <= DIVISIONS; j++) {
+            makeTriangle(i, j, i+1, j, i, j-1);
+            if (j > 1) {
+                makeTriangle(i, j, i, j-1, i-1, j-1);
+            }
+        }
     }
 
-    // Add two indexed triangles for projective point at infinity
-    const last = offset + 4*nPoints - 1;
-    index.push(last-1, last, offset+1);
-    index.push(last-3, last-2, offset+3);
+    // Connect triangles at infinity
+    for (let j = 1; j <= DIVISIONS; j++) {
+        makeTriangle(0, j, 1, j, 0, j-1);
+        makeTriangle(nPoints-1, -j, 0, j, 0, j-1);
+        if (j > 1) {
+            makeTriangle(nPoints-1, j, nPoints-1, j-1, nPoints-2, j-1);
+            makeTriangle(nPoints-1, j-1, nPoints-1, j, 0, -j+1);
+        }
+    }
 
-    while (output.length < SEGMENTS * 48) {
+    while (output.length < SEGMENTS * 12 * step) {
         output.push(0, 0, 0);
     }
+
     return [index, new Float32Array(output)];
 }
 

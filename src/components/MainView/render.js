@@ -17,7 +17,6 @@ function initializeRenderer() {
     renderer = new THREE.WebGLRenderer({
         canvas: canvas,
         antialias: true,
-        logarithmicDepthBuffer: true
     });
     renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
 

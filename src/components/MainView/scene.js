@@ -19,7 +19,7 @@ const CURVE_COLOR = 0x66B5F3;
 /***** Main Scene *****/
 /** Elliptic curve **/
 const curveLineMaterial = new THREE.LineBasicMaterial({
-    color: CURVE_COLOR, linewidth: 4});
+    color: CURVE_COLOR, linewidth: 3});
 
 // Loop component of two-component elliptic curve (optional)
 const curveLineGeoA = new THREE.BufferGeometry();
@@ -43,7 +43,10 @@ const axesMaterial = new THREE.LineBasicMaterial({color: 0xFFFFFF});
 const axesGeo = new THREE.BufferGeometry();
 axesGeo.addAttribute('position',
     new THREE.BufferAttribute(new Float32Array([
-        -1, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 1
+        -1, 0, 0, 0, 0, 0,
+        0, 0, 0, 1, 0, 0,
+        0, 0, -1, 0, 0, 0,
+        0, 0, 0, 0, 0, 1
     ]), 3)
 );
 const axes = new THREE.LineSegments(axesGeo, axesMaterial);
@@ -55,7 +58,10 @@ const yAxisMaterial = new THREE.LineBasicMaterial({
     color: 0xFFFFFF, transparent: true, opacity: 0});
 const yAxisGeo = new THREE.BufferGeometry();
 yAxisGeo.addAttribute('position',
-    new THREE.BufferAttribute(new Float32Array([0, -1, 0, 0, 1, 0]), 3)
+    new THREE.BufferAttribute(new Float32Array([
+        0, -1, 0, 0, 0, 0,
+        0, 0, 0, 0, 1, 0
+    ]), 3)
 );
 const yAxis = new THREE.Line(yAxisGeo, yAxisMaterial);
 yAxis.visible = false;
@@ -65,7 +71,8 @@ scene.add(yAxis);
 // Projective curve surface
 var curveSurfaceMaterial = new THREE.MeshPhongMaterial({
     color: CURVE_COLOR, side: THREE.DoubleSide,
-    transparent: true, opacity: 0
+    transparent: true, opacity: 0,
+    wireframe: false
 });
 
 const curveSurfaceGeo = new THREE.BufferGeometry();
@@ -76,18 +83,20 @@ curveSurfaceGeo.addAttribute('position',
 
 const curveSurface = new THREE.Mesh(curveSurfaceGeo, curveSurfaceMaterial);
 curveSurface.visible = false;
+curveSurface.scale.setScalar(4);
 scene.add(curveSurface);
 
 
 // Plane at y=1
 const planeMaterial = new THREE.MeshPhongMaterial({
-    color: 0x888888, side: THREE.DoubleSide,
+    color: 0x8888A0, side: THREE.DoubleSide,
     transparent: true, opacity: 0
 });
-const planeGeo = new THREE.PlaneBufferGeometry(2, 2);
+const planeGeo = new THREE.PlaneBufferGeometry(2, 2, 10, 10);
 const plane = new THREE.Mesh(planeGeo, planeMaterial);
 plane.rotateX(Math.PI/2);
-plane.position.setY(1);
+plane.position.setY(0.99);
+plane.scale.setScalar(4);
 scene.add(plane);
 
 
@@ -133,11 +142,11 @@ function initialize() {
 function update() {
     if (orbitControls.enabled) {orbitControls.update();}
 
-    const uxScale = 10 * Math.max(camera.position.length(), 0.1);
+    const uxScale = 5 * Math.max(camera.position.length(), 0.1);
     axes.scale.setScalar(uxScale);
-    plane.scale.setScalar(uxScale);
+    //plane.scale.setScalar(uxScale);
     yAxis.scale.setScalar(uxScale);
-    curveSurface.scale.setScalar(uxScale);
+    //curveSurface.scale.setScalar(uxScale);
 
     light.position.copy(camera.position);
 }
