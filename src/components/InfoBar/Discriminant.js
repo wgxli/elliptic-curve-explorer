@@ -8,8 +8,7 @@ function Discriminant({curve}) {
     const {reduced} = curve;
     const {discriminant, discriminantFactorization} = reduced;
 
-    var factorization = renderFactorization(
-        reduced.discriminantFactorization);
+    var factorization = renderFactorization(discriminantFactorization);
     if (discriminant.lt(0)) {
         factorization = '-' + factorization;
     }

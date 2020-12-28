@@ -45,8 +45,8 @@ function animate() {
     requestAnimationFrame(animate);
 
     // Debug
-    frame += 1;
-    if (frame % skip !== 0) {return;}
+//    frame += 1;
+//    if (frame % skip !== 0) {return;}
 
     renderer.render(SCENE.scene, SCENE.camera);
 
