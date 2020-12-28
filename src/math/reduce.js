@@ -15,8 +15,8 @@ import AffineMap, {IdentityMap} from './affineMap.js';
  * equation and the map (x, y) -> (X, Y).
  */
 function reduce1(curve) {
-	// NOT IMPLEMENTED
-	return curve;
+    // NOT IMPLEMENTED
+    return curve;
 }
 
 
@@ -36,18 +36,18 @@ function reduce1(curve) {
  * equation and the map (x, y) -> (X, Y).
  */
 function reduce2(curve) {
-	const [a, b, c, d, e] = curve;
-	const coefficients = [
-		b.times(4).plus(a.times(a)),
-		d.times(2).plus(a.times(c)).times(8),
-		e.times(4).plus(c.times(c)).times(16)
-	];
+    const [a, b, c, d, e] = curve;
+    const coefficients = [
+        b.times(4).plus(a.times(a)),
+        d.times(2).plus(a.times(c)).times(8),
+        e.times(4).plus(c.times(c)).times(16)
+    ];
 
-	const map = new AffineMap([
-		4, 0, 0,
-		a.times(4), 8, c.times(4)
-	]);
-	return [coefficients, map];
+    const map = new AffineMap([
+        4, 0, 0,
+        a.times(4), 8, c.times(4)
+    ]);
+    return [coefficients, map];
 }
 
 /*
@@ -63,19 +63,19 @@ function reduce2(curve) {
  * and the map (x, y) -> (X, Y).
  */
 function reduce3(curve) {
-	const [a, b, c] = curve;
-	const coefficients = [
-		b.times(3).minus(a.times(a)).times(27),
-		a.times(
-			a.times(a.times(2)).minus(b.times(9))
-		).plus(c.times(27)).times(27)
-	]
+    const [a, b, c] = curve;
+    const coefficients = [
+        b.times(3).minus(a.times(a)).times(27),
+        a.times(
+            a.times(a.times(2)).minus(b.times(9))
+        ).plus(c.times(27)).times(27)
+    ]
 
-	const map = new AffineMap([
-		9, 0, a.times(3),
-		0, 27, 0
-	]);
-	return [coefficients, map];
+    const map = new AffineMap([
+        9, 0, a.times(3),
+        0, 27, 0
+    ]);
+    return [coefficients, map];
 }
 
 /*
@@ -93,39 +93,39 @@ function reduce3(curve) {
  * and the map (X, Y) -> (x, y).
  */
 function minimize(curve) {
-	const [a, b] = curve;
+    const [a, b] = curve;
 
-	if (a.eq(0) && b.eq(0)) {
-		const map = new AffineMap([
-			6, 0, 0,
-			0, 1, 0
-		], 216);
-		return [curve, map];
-	}
+    if (a.eq(0) && b.eq(0)) {
+        const map = new AffineMap([
+            6, 0, 0,
+            0, 1, 0
+        ], 216);
+        return [curve, map];
+    }
 
-	var gcd = bigInt.gcd(a.pow(3), b.pow(2));
-	var scale = bigInt.one;
+    var gcd = bigInt.gcd(a.pow(3), b.pow(2));
+    var scale = bigInt.one;
 
-	var p = bigInt(2);
-	while (p.pow(12).leq(gcd)) {
-		if (gcd.isDivisibleBy(p.pow(12))) {
-			gcd = gcd.divide(p.pow(12));
-			scale = scale.times(p);
-		} else {
-			p = p.plus(1);
-		}
-	}
+    var p = bigInt(2);
+    while (p.pow(12).leq(gcd)) {
+        if (gcd.isDivisibleBy(p.pow(12))) {
+            gcd = gcd.divide(p.pow(12));
+            scale = scale.times(p);
+        } else {
+            p = p.plus(1);
+        }
+    }
 
-	const coefficients = [
-		a.divide(scale.pow(4)),
-		b.divide(scale.pow(6))
-	];
+    const coefficients = [
+        a.divide(scale.pow(4)),
+        b.divide(scale.pow(6))
+    ];
 
-	const map = new AffineMap([
-		scale.pow(4), 0, 0,
-		0, scale.pow(3), 0
-	], scale.pow(6));
-	return [coefficients, map];
+    const map = new AffineMap([
+        scale.pow(4), 0, 0,
+        0, scale.pow(3), 0
+    ], scale.pow(6));
+    return [coefficients, map];
 }
 
 
@@ -133,25 +133,25 @@ function minimize(curve) {
  * Composes the given list of functions.
  */
 function compose(functions) {
-	return (function(curve) {
-		var overallMap = IdentityMap;
-		var map;
+    return (function(curve) {
+        var overallMap = IdentityMap;
+        var map;
 
-		for (var f of functions) {
-			[curve, map] = f(curve);
-			overallMap = map.compose(overallMap);
-		}
+        for (var f of functions) {
+            [curve, map] = f(curve);
+            overallMap = map.compose(overallMap);
+        }
 
-		return [curve, overallMap];
-	});
+        return [curve, overallMap];
+    });
 }
 
 const reduceFull = compose([reduce2, reduce3, minimize]);
 
 export {
-	reduce1,
-	reduce2,
-	reduce3,
-	minimize
+    reduce1,
+    reduce2,
+    reduce3,
+    minimize
 };
 export default reduceFull;

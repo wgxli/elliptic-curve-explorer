@@ -1,35 +1,115 @@
 .main-equation {
-	font-size: 32px;
-	display: inline-block;
+    font-size: 28px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-	white-space: nowrap;
-	margin: 8px auto;
+    white-space: nowrap;
+    margin: 8px auto;
 
-	user-select: none;
+    user-select: none;
+}
+
+.term-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
 }
 
 .equation-term {
-	margin-left: 10px;
-	cursor: ew-resize;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 15px 0;
+    position: relative;
 }
-.equation-term.faded {
-	color: #CCC;
+
+.term-wrapper.faded {
+    color: hsl(200, 10%, 70%);
+}
+
+.equation-term .arrow-container {
+    position: absolute;
+    height: 60px;
+    margin: -30px 0;
+    width: 80px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.equation-term .arrow-container.up {
+    top: -10px;
+}
+
+.equation-term .arrow-container.down {
+    bottom: -10px;
+}
+
+.equation-term .arrow-container .arrow {
+    border: 8px solid transparent;
+}
+
+.equation-term .arrow-container.up .arrow {
+    border-bottom: 6px solid hsl(200, 10%, 85%);
+}
+
+.equation-term .arrow-container.down .arrow {
+    border-top: 6px solid hsl(200, 10%, 85%);
+}
+
+.equation-term .arrow-container.up:hover .arrow {
+    border-bottom: 6px solid hsl(200, 30%, 50%);
+}
+
+.equation-term .arrow-container.down:hover .arrow {
+    border-top: 6px solid hsl(200, 30%, 50%);
 }
 
 /***** Media Queries *****/
 
 @media (max-width: 850px) {
-	.main-equation {
-		font-size: 24px;
-	}
+    .main-equation {
+        font-size: 18px;
+    }
 
-	.equation-term {
-		margin-left: 8px;
-	}
-}
+    .equation-term {
+        margin: 8px 0;
+    }
 
-@media (max-width: 700px) {
-	.mobile-break {
-		display: block;
-	}
+    .term-wrapper {
+        margin-left: 5px;
+    }
+
+    .equation-term .arrow-container {
+        height: 30px;
+        margin: -13px 0;
+        width: 40px;
+    }
+
+    .equation-term .arrow-container .arrow {
+        border: 6px solid transparent;
+    }
+
+    .equation-term .arrow-container.up .arrow {
+        border-bottom: 4px solid hsl(200, 10%, 80%);
+    }
+
+    .equation-term .arrow-container.down .arrow {
+        border-top: 4px solid hsl(200, 10%, 80%);
+    }
+
+    .equation-term .arrow-container.up:hover .arrow {
+        border-bottom: 4px solid hsl(200, 30%, 50%);
+    }
+
+    .equation-term .arrow-container.down:hover .arrow {
+        border-top: 4px solid hsl(200, 30%, 50%);
+    }
 }

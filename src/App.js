@@ -3,8 +3,7 @@ import React, {PureComponent} from 'react';
 import bigInt from 'big-integer';
 
 import ControlBar from './components/ControlBar/ControlBar.js';
-import InfoPanel from './components/InfoPanel/InfoPanel.js';
-//import HelpPanel from './components/HelpPanel/HelpPanel.js';
+import InfoBar from './components/InfoBar';
 import MainView from './components/MainView/MainView.js';
 
 import Curve from './math/curve.js';
@@ -24,66 +23,53 @@ import './App.css';
  */
 
 class App extends PureComponent {
-	constructor(props) {
-		super(props);
+    constructor(props) {
+        super(props);
 
-		// y^2 = x^3 - x
-		const initialCurve = [0, 0, 0, -1, 0];
+        // y^2 = x^3 - x
+        const initialCurve = [0, 0, 0, -1, 0];
 
-		this.state = {
-			curve: initialCurve.map((x) => bigInt(x)),
-			infoPanelOpen: window.innerWidth > 800,
-			view3D: false,
-			helpPanelOpen: false
-		}
-	}
+        this.state = {
+            curve: initialCurve.map((x) => bigInt(x)),
+            view3D: false,
+        }
+    }
 
-	toggleInfoPanel() {
-		this.setState({infoPanelOpen: !this.state.infoPanelOpen});
-	}
+    toggle3DView() {
+        this.setState({view3D: !this.state.view3D});
+    }
 
-	toggleHelpPanel() {
-		this.setState({helpPanelOpen: !this.state.helpPanelOpen});
-	}
+    setCoefficient(i, v) {
+        const curve = this.state.curve;
+        curve[i] = v;
+        this.setState({curve: [...curve]});
+    }
 
-	toggle3DView() {
-		this.setState({view3D: !this.state.view3D});
-	}
+    render() {
+        const {view3D} = this.state;
+        const curve = new Curve(...this.state.curve);
+        return (
+            <MuiThemeProvider theme={theme}>
+                <ControlBar
+                    curve={curve}
+                    setCoefficient={this.setCoefficient.bind(this)}
 
-	setCoefficient(i, v) {
-		const curve = this.state.curve;
-		curve[i] = v;
-		this.setState({curve: [...curve]});
-	}
-
-	render() {
-		const curve = new Curve(...this.state.curve);
-		return (
-			<MuiThemeProvider theme={theme}>
-				<ControlBar
-					curve={curve}
-					setCoefficient={this.setCoefficient.bind(this)}
-
-					handleMenuButton={this.toggleInfoPanel.bind(this)}
-					handleHelpButton={this.toggleHelpPanel.bind(this)}
-
-					view3D={this.state.view3D}
-					handle3DSwitch={this.toggle3DView.bind(this)}
-				/>
-				<div className='content'>
-					<InfoPanel
-						curve={curve}
-						open={this.state.infoPanelOpen}
-						view3D={this.state.view3D}
-					/>
-					<MainView
-						curve={curve}
-						view3D={this.state.view3D}
-					/>
-				</div>
-			</MuiThemeProvider>
-		);
-	}
+                    view3D={view3D}
+                    handle3DSwitch={this.toggle3DView.bind(this)}
+                />
+                <div className='content'>
+                    <MainView
+                        curve={curve}
+                        view3D={view3D}
+                    />
+                    <InfoBar
+                        curve={curve}
+                        view3D={view3D}
+                    />
+                </div>
+            </MuiThemeProvider>
+        );
+    }
 }
 
 export default App;

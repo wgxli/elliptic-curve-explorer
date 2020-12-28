@@ -2,67 +2,67 @@ import bigInt from 'big-integer';
 
 
 function renderCoefficient(n, hideUnit=true, first=false) {
-	var sign = n.lt(0) ? '-' : '+';
+    var sign = n.lt(0) ? '-' : '+';
 
-	if (first && sign === '+') {
-		sign = '';
-	}
+    if (first && sign === '+') {
+        sign = '';
+    }
 
-	if (n.lt(0)) {
-		n = bigInt.zero.minus(n);
-	}
+    if (n.lt(0)) {
+        n = bigInt.zero.minus(n);
+    }
 
-	if (n.eq(1) && hideUnit) {
-		n = '';
-	}
+    if (n.eq(1) && hideUnit) {
+        n = '';
+    }
 
-	return [sign, n];
+    return [sign, n];
 }
 
 
 function renderTerm(n, monomial='', first=false) {
-	n = bigInt(n);
-	const [sign, coefficient] = renderCoefficient(
-		n, (monomial !== ''), first);
+    n = bigInt(n);
+    const [sign, coefficient] = renderCoefficient(
+        n, (monomial !== ''), first);
 
-	if (n.eq(0)) {
-		return '';
-	} else {
-		return [sign, coefficient, monomial].join('');
-	}
+    if (n.eq(0)) {
+        return '';
+    } else {
+        return [sign, coefficient, monomial].join('');
+    }
 }
 
 function renderPolynomial(coefficients, monomials, first=true) {
-	const terms = []
+    const terms = []
 
-	for (var i=0; i < coefficients.length; i++) {
-		const term = renderTerm(coefficients[i], monomials[i], first);
-		if (term !== '') {
-			terms.push(term);
-			first = false;
-		}
-	}
-	return terms.join('');
+    for (var i=0; i < coefficients.length; i++) {
+        const term = renderTerm(coefficients[i], monomials[i], first);
+        if (term !== '') {
+            terms.push(term);
+            first = false;
+        }
+    }
+    return terms.join('');
 }
 
 function renderFactorization(factorization) {
-	const output = [];
-	
-	for (var [k, v] of factorization) {
-		if (v === 1) {
-			output.push(k);
-		} else {
-			output.push(k + '^{' + v + '}');
-		}
-	}
+    const output = [];
 
-	return output.join('\\cdot');
+    for (var [k, v] of factorization) {
+        if (v === 1) {
+            output.push(k);
+        } else {
+            output.push(k + '^{' + v + '}');
+        }
+    }
+
+    return output.join('\\cdot');
 }
 
 
 export {
-	renderCoefficient,
-	renderTerm,
-	renderPolynomial,
-	renderFactorization
+    renderCoefficient,
+    renderTerm,
+    renderPolynomial,
+    renderFactorization
 };

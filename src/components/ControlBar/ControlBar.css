@@ -1,35 +1,37 @@
 .control-bar {
-	padding: 0 20px;
-}
-
-.control-bar .spacer {
-	flex-grow: 1;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
 }
 
 .control-bar .equation-container {
-	display: block;
-	overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    overflow: hidden;
+    flex-grow: 1;
 }
 
 .control-bar .options {
-	white-space: nowrap;
-	display: inline-block;
+    white-space: nowrap;
+    display: inline-block;
 }
 
 /***** Media Queries *****/
 @media (max-width: 850px) {
-	.control-bar {
-		padding: 0 10px;
-	}
+    .control-bar {
+        padding: 0 10px;
+    }
 }
 
 @media (max-width: 700px) {
-	.control-bar {
-		padding: 0;
-	}
+    .control-bar {
+        padding: 0;
+    }
 
-	.control-bar .options {
-		width: 1px;
-		overflow: hidden;
-	}
+    .control-bar .options {
+        width: 1px;
+        overflow: hidden;
+    }
 }

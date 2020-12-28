@@ -11,76 +11,76 @@ import Collapse from '@material-ui/core/Collapse';
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = (theme) => ({
-	expandButton: {
-		transition: theme.transitions.create('transform', {
-			duration: theme.transitions.duration.short
-		})
-	},
-	expandClosed: {
-		transform: 'rotate(0deg)',
-	},
-	expandOpen: {
-		transform: 'rotate(180deg)',
-	},
+    expandButton: {
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.short
+        })
+    },
+    expandClosed: {
+        transform: 'rotate(0deg)',
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
+    },
 
-	buttonContainer: {
-		display: 'flex'
-	},
-	spacer: {
-		flexGrow: 1
-	}
+    buttonContainer: {
+        display: 'flex'
+    },
+    spacer: {
+        flexGrow: 1
+    }
 });
 
 
 class InfoCard extends PureComponent {
-	render() {
-		return (
-			<Card className='info-card'>
-				<CardContent>
-					<Typography variant='h5' component='h2' gutterBottom>
-						{this.props.title}
-					</Typography>
-					{this.props.children}
-				</CardContent>
-			</Card>
-		);
-	}
+    render() {
+        return (
+            <Card className='info-card'>
+                <CardContent>
+                    <Typography variant='h5' component='h2' gutterBottom>
+                        {this.props.title}
+                    </Typography>
+                    {this.props.children}
+                </CardContent>
+            </Card>
+        );
+    }
 }
 
 class ExpansionPanel extends PureComponent {
-	constructor(props) {
-		super(props);
-		this.state = {expanded: false};
-	}
+    constructor(props) {
+        super(props);
+        this.state = {expanded: false};
+    }
 
-	toggleOpen() {
-		this.setState({expanded: !this.state.expanded});
-	}
+    toggleOpen() {
+        this.setState({expanded: !this.state.expanded});
+    }
 
-	render() {
-		const classes = this.props.classes;
+    render() {
+        const classes = this.props.classes;
 
-		return (
-			<div style={{marginBottom: '-12px'}}>
-				<div className={classes.buttonContainer}>
-					<div className={classes.spacer}/>
-					<IconButton
-						className={
-							classes.expandButton
-							+ ' ' + (this.state.expanded ?
-							classes.expandOpen : classes.expandClosed)
-						}
-						onClick={this.toggleOpen.bind(this)}
-					>
-						<ExpandMoreIcon/>
-					</IconButton>
-				</div>
-				<Collapse in={this.state.expanded}>
-					{this.props.children}
-				</Collapse>
-			</div>
-		);
-	}
+        return (
+            <div style={{marginBottom: '-12px'}}>
+                <div className={classes.buttonContainer}>
+                    <div className={classes.spacer}/>
+                    <IconButton
+                        className={
+                            classes.expandButton
+                                + ' ' + (this.state.expanded ?
+                                classes.expandOpen : classes.expandClosed)
+                        }
+                        onClick={this.toggleOpen.bind(this)}
+                    >
+                        <ExpandMoreIcon/>
+                    </IconButton>
+                </div>
+                <Collapse in={this.state.expanded}>
+                    {this.props.children}
+                </Collapse>
+            </div>
+        );
+    }
 }
 
 const S_ExpansionPanel = withStyles(styles)(ExpansionPanel);
