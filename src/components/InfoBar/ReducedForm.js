@@ -15,15 +15,15 @@ function ReducedForm({curve, homogeneous}) {
     const multiplier = (map.denominator.eq(1))
         ? '' : `\\frac{1}{${map.denominator}}`;
 
-    return <div>
+    return <div className='reduced-form'>
         <h2>Reduced Form</h2>
-        <DisplayEquation fontSize={window.innerWidth > 600 ? 18 : 14}>
+        <DisplayEquation fontSize={window.innerWidth > 600 ? 20 : 16}>
             {homogeneous ? 'Y^2 Z' : 'Y^2'}
             =
             {renderPolynomial([1, a, b], curve_basis)}
         </DisplayEquation>
         <div className='faded'>
-        <DisplayEquation fontSize={window.innerWidth > 600 ? 12 : 11}>
+        <DisplayEquation fontSize={12}>
             {homogeneous ? '[X:Y:Z]' : '(X, Y)'}
             :=
             {multiplier + (homogeneous ? '[' : '(')}

@@ -39,7 +39,7 @@ function GroupStructure({curve}) {
         group = `E(\\mathbb{Q}) \\cong ${getGroupName(order, orders)}`;
     }
 
-    return <div>
+    return <div className='group-structure'>
         <h2>Group Structure</h2>
         <DisplayEquation fontSize={window.innerWidth > 600 ? 20 : 16}>
             {group}

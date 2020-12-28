@@ -40,13 +40,15 @@ function initialize() {
 
 const skip = 10;
 let frame = 0;
+const debug = false;
 
 function animate() {
     requestAnimationFrame(animate);
 
-    // Debug
-//    frame += 1;
-//    if (frame % skip !== 0) {return;}
+    if (debug) {
+        frame += 1;
+        if (frame % skip !== 0) {return;}
+    }
 
     renderer.render(SCENE.scene, SCENE.camera);
 

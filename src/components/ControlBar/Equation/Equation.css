@@ -79,6 +79,10 @@
         font-size: 18px;
     }
 
+    .main-equation.homogeneous {
+        font-size: 14px;
+    }
+
     .equation-term {
         margin: 8px 0;
     }

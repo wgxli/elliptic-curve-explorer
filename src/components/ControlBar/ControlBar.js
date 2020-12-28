@@ -23,7 +23,12 @@ const styles = theme => ({
 
 class ControlBar extends PureComponent {
     render() {
-        const classes = this.props.classes;
+        const {
+            view3D, handle3DSwitch,
+            curve, setCoefficient,
+            classes
+        } = this.props;
+
         return (
             <AppBar className={classes.appBar}>
                 <Toolbar
@@ -32,20 +37,28 @@ class ControlBar extends PureComponent {
                 >
                     <div className='equation-container'>
                         <Equation
-                            coefficients={this.props.curve.coefficients}
-                            setCoefficient={this.props.setCoefficient}
-                            homogeneous={this.props.view3D}
+                            coefficients={curve.coefficients}
+                            setCoefficient={setCoefficient}
+                            homogeneous={view3D}
                         />
                     </div>
                     <span className='options'>
                         2D
                         <Switch
-                            checked={this.props.view3D}
-                            onChange={this.props.handle3DSwitch}
+                            checked={view3D}
+                            onChange={handle3DSwitch}
                             color='primary'
                         />
                         3D
                     </span>
+                    <div className='mobile-view-switcher'>
+                        <div onClick={handle3DSwitch} className={
+                            'entry' + (view3D ? '' : ' selected')
+                        }>2D</div>
+                        <div onClick={handle3DSwitch} className={
+                            'entry' + (view3D ? ' selected' : '')
+                        }>3D</div>
+                    </div>
                 </Toolbar>
             </AppBar>
         );

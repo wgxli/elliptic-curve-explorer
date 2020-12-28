@@ -8,9 +8,12 @@ function Discriminant({curve}) {
     const {reduced} = curve;
     const {discriminant, discriminantFactorization} = reduced;
 
-    var factorization = renderFactorization(discriminantFactorization);
+    let factorization = renderFactorization(discriminantFactorization);
     if (discriminant.lt(0)) {
         factorization = '-' + factorization;
+    }
+    if (discriminant.eq(0)) {
+        factorization = '0';
     }
 
     return <div className='discriminant'>
@@ -18,9 +21,12 @@ function Discriminant({curve}) {
         <DisplayEquation fontSize={window.innerWidth > 600 ? 20 : 16}>
         \Delta =
         {discriminant}
-        {discriminant.eq(0) ? ''
-        : ('=' + factorization)}
     </DisplayEquation>
+    <div className='faded'>
+        <DisplayEquation fontSize={12}>
+            ({factorization})
+        </DisplayEquation>
+    </div>
     </div>
 }
 

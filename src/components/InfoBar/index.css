@@ -36,19 +36,23 @@
         grid-template-columns: 1fr 1fr;
     }
 
-    .info-bar .discriminant {
-        grid-column: span 2;
+    .info-bar .group-structure {
+        display: none;
     }
 }
 
 
 @media (max-width: 600px) {
     .info-bar {
-        grid-template-columns: 1fr;
+        grid-template-columns: 2fr 1fr;
         padding: 15px;
     }
 
-    .info-bar .discriminant {
-        grid-column: span 1;
+    .info-bar .reduced-form {
+        display: none;
+    }
+
+    .info-bar .group-structure {
+        display: initial;
     }
 }

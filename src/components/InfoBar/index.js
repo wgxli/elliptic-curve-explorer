@@ -9,7 +9,7 @@ function InfoBar({curve, view3D}) {
     return <div className='info-bar'>
         <Discriminant curve={curve}/>
         <ReducedForm curve={curve} homogeneous={view3D}/>
-        {window.innerWidth < 600 ? null : <GroupStructure curve={curve}/>}
+        <GroupStructure curve={curve}/>
     </div>;
 }
 
