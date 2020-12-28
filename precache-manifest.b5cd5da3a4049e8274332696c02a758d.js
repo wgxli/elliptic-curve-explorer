@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/elliptic-curve-explorer/static/media/KaTeX_Main-BoldItalic.2cefb96e.woff2"
   },
   {
-    "revision": "af643e7a5f443db4c373",
-    "url": "/elliptic-curve-explorer/static/css/main.7ecab596.chunk.css"
+    "revision": "eae06dc8621cf6c4d952",
+    "url": "/elliptic-curve-explorer/static/css/main.43e6177d.chunk.css"
   },
   {
     "revision": "a64cfb8f81419b8b584a",
@@ -36,16 +36,12 @@ self.__precacheManifest = [
     "url": "/elliptic-curve-explorer/static/media/KaTeX_Size2-Regular.50bcc9e8.woff"
   },
   {
-    "revision": "4f2160f04d44c2d05a4da9a9a78bc2ed",
-    "url": "/elliptic-curve-explorer/static/media/KaTeX_Size3-Regular.4f2160f0.woff"
-  },
-  {
     "revision": "b583d1f1222c9560bb72a688d5f081c7",
     "url": "/elliptic-curve-explorer/static/media/KaTeX_Size3-Regular.b583d1f1.woff2"
   },
   {
-    "revision": "104294e4cee02c072980a209b88c3029",
-    "url": "/elliptic-curve-explorer/static/media/KaTeX_Size4-Regular.104294e4.woff2"
+    "revision": "4f2160f04d44c2d05a4da9a9a78bc2ed",
+    "url": "/elliptic-curve-explorer/static/media/KaTeX_Size3-Regular.4f2160f0.woff"
   },
   {
     "revision": "2f811a580b2d028e2920d50a2f8eb42d",
@@ -54,6 +50,10 @@ self.__precacheManifest = [
   {
     "revision": "f9b5a33d9539cfac7cd6a52ad68ca673",
     "url": "/elliptic-curve-explorer/static/media/KaTeX_Size4-Regular.f9b5a33d.woff"
+  },
+  {
+    "revision": "104294e4cee02c072980a209b88c3029",
+    "url": "/elliptic-curve-explorer/static/media/KaTeX_Size4-Regular.104294e4.woff2"
   },
   {
     "revision": "9e74aa81afcd2a2c51e6fdda41905bbd",
@@ -88,8 +88,8 @@ self.__precacheManifest = [
     "url": "/elliptic-curve-explorer/static/media/KaTeX_SansSerif-Regular.a8506f1b.woff"
   },
   {
-    "revision": "46b2d8cfe4fd0021561890cf34a99e86",
-    "url": "/elliptic-curve-explorer/static/media/KaTeX_Script-Regular.46b2d8cf.woff"
+    "revision": "4b4feb459569bc556025e27940c5a43c",
+    "url": "/elliptic-curve-explorer/static/media/KaTeX_Script-Regular.4b4feb45.woff2"
   },
   {
     "revision": "686db35f856dc151987748d946b577f2",
@@ -104,8 +104,8 @@ self.__precacheManifest = [
     "url": "/elliptic-curve-explorer/static/media/KaTeX_Size4-Regular.4c04d946.ttf"
   },
   {
-    "revision": "4b4feb459569bc556025e27940c5a43c",
-    "url": "/elliptic-curve-explorer/static/media/KaTeX_Script-Regular.4b4feb45.woff2"
+    "revision": "46b2d8cfe4fd0021561890cf34a99e86",
+    "url": "/elliptic-curve-explorer/static/media/KaTeX_Script-Regular.46b2d8cf.woff"
   },
   {
     "revision": "2c8faa1b5f83e4062290d6f1f48feeef",
@@ -132,8 +132,8 @@ self.__precacheManifest = [
     "url": "/elliptic-curve-explorer/static/media/KaTeX_Fraktur-Regular.b48160ea.woff"
   },
   {
-    "revision": "af643e7a5f443db4c373",
-    "url": "/elliptic-curve-explorer/static/js/main.a921089e.chunk.js"
+    "revision": "eae06dc8621cf6c4d952",
+    "url": "/elliptic-curve-explorer/static/js/main.76249255.chunk.js"
   },
   {
     "revision": "d9153c94a9b598eefe0e4179c9e97205",
@@ -260,7 +260,7 @@ self.__precacheManifest = [
     "url": "/elliptic-curve-explorer/static/css/2.b1ff0d04.chunk.css"
   },
   {
-    "revision": "48fbd880acccef5c3ce5b4814f0325b0",
+    "revision": "30db699ef4056c00003166c4f13ee52b",
     "url": "/elliptic-curve-explorer/index.html"
   }
 ];
